@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { Button, Collapse } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import './App.css';
 
 const { ethers } = require("ethers");
 
+const { Panel } = Collapse;
 
 const CONTRACT_ADDRESS = "0xB3bA5A82263728c0128649BBeF634f64c2865F86";
-const ABI = [
+const TOKEN_CONTRACT_ADDRESS = "0x80273525B1548EeA1f211f4218Cf30c1a7C86b25";
+const LOTTERY_ABI = [
   {
     "inputs": [
       {
@@ -445,10 +449,12 @@ const ABI = [
     "type": "function"
   }
 ];
+const TOKEN_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]
 
 function App() {
   const [provider, setProvider] = useState(null);
   const [contract, setContract] = useState(null);
+  const [tokenContract, setTokenContract] = useState(null);
   const [account, setAccount] = useState(null);
   const [currentPool, setCurrentPool] = useState(0);
   const [lastWinner, setLastWinner] = useState("");
@@ -457,9 +463,11 @@ function App() {
   useEffect(() => {
     if (window.ethereum) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider);
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, LOTTERY_ABI, provider);
+      const tokenContract = new ethers.Contract(TOKEN_CONTRACT_ADDRESS, TOKEN_ABI, provider);
       setProvider(provider);
       setContract(contract);
+      setTokenContract(tokenContract);
     }
   }, []);
 
@@ -485,6 +493,14 @@ function App() {
     fetchLotteryInfo();
   };
 
+  const approveContract = async () => {
+    const signer = provider.getSigner();
+    const tokenContractWithSigner = tokenContract.connect(signer);
+    const amount = ethers.utils.parseUnits("1000000", 18); // 1000000 tokens with 18 decimals
+    const tx = await tokenContractWithSigner.approve(CONTRACT_ADDRESS, amount);
+    await tx.wait();
+  };
+
   useEffect(() => {
     if (contract) {
       fetchLotteryInfo();
@@ -494,7 +510,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {account ? account.substring(0, 5) + '...' + account.substring(account.length - 3) : <button onClick={connectWallet}>Connect Wallet</button>}
+    {account ? account.substring(0, 5) + '...' + account.substring(account.length - 3) : <button onClick={connectWallet}>Connect Wallet</button>}
       </header>
       <main>
         <h1>BitCone Lottery</h1>
@@ -502,10 +518,35 @@ function App() {
           <p>Next pull on: {new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()}</p>
           <p>Amount in current Lottery: {currentPool} CONE</p>
           <p>Entry Amount: 1.000.000 CONE</p>
+          <button onClick={approveContract} disabled={!account}>Approve Contract</button>
           <button onClick={enterLottery} disabled={!account}>Enter Lottery</button>
-          <p>Last Winner: {lastWinner}</p>
-          <p>Last amount won: {lastPrize} CONE</p>
         </div>
+        <div className='lastWinner'>
+        <p>Last Winner: {lastWinner.substring(0, 5) + '...' + lastWinner.substring(lastWinner.length - 3)}</p>
+        <p>Last amount won: {lastPrize} CONE</p>
+        </div>
+        <div className="faq-section">
+      <h2>FAQs</h2>
+      <Collapse defaultActiveKey={['1']} className='faq-collapse'>
+      <Panel header="Question 1" key="1">
+        <p>Answer 1</p>
+      </Panel>
+      <Panel header="Question 2" key="2">
+        <p>Answer 2</p>
+      </Panel>
+      <Panel header="Question 3" key="3">
+        <p>Answer 3</p>
+      </Panel>
+      </Collapse>
+    </div>
+        <Button 
+          type="default" 
+          shape="circle"
+          icon={<InfoCircleOutlined />} 
+          size="large" 
+          style={{ position: 'fixed', bottom: '5rem', right: '5rem' }} 
+          onClick={() => window.location.href='https://www.gitbook.com'}
+        />
       </main>
     </div>
   );

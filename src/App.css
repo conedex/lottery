@@ -3,17 +3,19 @@
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 60px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  color: white;
+  color: rgb(0,0,0);
   padding-right: 20px;
 }
 
 button {
+  border: 1px solid #000;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px black;
   background-color: orange;
   color: white;
   border: none;
@@ -26,7 +28,75 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  background-color: #FFA5007F;
+  cursor: not-allowed;
+}
+
+h1 {
+  color: #282c34;
+  font-size: 2.5em;
+  text-align: center;
+  padding: 20px 0;
+  font-weight: bold;
+}
+
 .lottery-info {
-  width: 50%;
+  width: 90%;
   margin: 0 auto;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  box-shadow: 10px 5px 5px black;
+}
+
+.lastWinner {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 10%;
+  border: 1px solid #000;
+  box-shadow: 10px 5px 5px goldenrod;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 200px;
+  height: 100vh;
+  background-color: #333;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.faq-collapse {
+  width: 90%;
+  min-width: 300px;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .lottery-info {
+    width: 25%;
+  }
+
+  .lastWinner {
+    width: 25%;
+    margin-top: 2%;
+  }
+  
+  .faq-collapse {
+    width: 25%;
+  }
 }
