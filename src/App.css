@@ -8,7 +8,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  color: rgb(0,0,0);
+  color: rgb(0, 0, 0);
   padding-right: 20px;
 }
 
@@ -24,12 +24,12 @@ button {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
+  margin: 4px 10px 4px 10px;
   cursor: pointer;
 }
 
 button:disabled {
-  background-color: #FFA5007F;
+  background-color: #ffa5007f;
   cursor: not-allowed;
 }
 
@@ -95,7 +95,7 @@ h1 {
     width: 25%;
     margin-top: 2%;
   }
-  
+
   .faq-collapse {
     width: 25%;
   }

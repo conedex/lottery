@@ -647,6 +647,7 @@ function App() {
   const [currentPool, setCurrentPool] = useState(0);
   const [lastWinner, setLastWinner] = useState("");
   const [lastPrize, setLastPrize] = useState(0);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     if (window.ethereum) {
@@ -684,19 +685,40 @@ function App() {
   };
 
   const enterLottery = async () => {
-    const signer = provider.getSigner();
-    const contractWithSigner = contract.connect(signer);
-    const tx = await contractWithSigner.enterLottery();
-    await tx.wait();
-    fetchLotteryInfo();
+    try {
+      const signer = provider.getSigner();
+      const contractWithSigner = contract.connect(signer);
+      const tx = await contractWithSigner.enterLottery();
+      await tx.wait();
+      fetchLotteryInfo();
+      setErrorMessage(null);
+    } catch (error) {
+      if (error.code === 4001) {
+        setErrorMessage("Transaction was not approved.");
+      } else {
+        setErrorMessage("Please Approve Contract");
+      }
+    }
   };
 
   const approveContract = async () => {
-    const signer = provider.getSigner();
-    const tokenContractWithSigner = tokenContract.connect(signer);
-    const amount = ethers.utils.parseUnits("1000000", 18); // 1000000 tokens with 18 decimals
-    const tx = await tokenContractWithSigner.approve(CONTRACT_ADDRESS, amount);
-    await tx.wait();
+    try {
+      const signer = provider.getSigner();
+      const tokenContractWithSigner = tokenContract.connect(signer);
+      const amount = ethers.utils.parseUnits("1000000", 18); // 1000000 tokens with 18 decimals
+      const tx = await tokenContractWithSigner.approve(
+        CONTRACT_ADDRESS,
+        amount
+      );
+      await tx.wait();
+      setErrorMessage(null);
+    } catch (error) {
+      if (error.code === 4001) {
+        setErrorMessage("Transaction was not approved.");
+      } else {
+        setErrorMessage("An error occurred.");
+      }
+    }
   };
 
   useEffect(() => {
@@ -730,6 +752,7 @@ function App() {
           <button onClick={approveContract} disabled={!account}>
             Approve Contract
           </button>
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
           <button onClick={enterLottery} disabled={!account}>
             Enter Lottery
           </button>
