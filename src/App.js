@@ -744,7 +744,7 @@ function App() {
           <p>
             Next pull on:{" "}
             {new Date(
-              Date.now() + 7 * 24 * 60 * 60 * 1000
+              Date.now() + 1 * 24 * 60 * 60 * 1000
             ).toLocaleDateString()}
           </p>
           <p>Amount in current Lottery: {currentPool} CONE</p>
@@ -797,7 +797,7 @@ function App() {
             </Panel>
           </Collapse>
         </div>
-        <Button
+        {/*<Button
           type="default"
           shape="circle"
           icon={<InfoCircleOutlined />}
@@ -806,7 +806,7 @@ function App() {
           onClick={() =>
             (window.location.href = "https://github.com/conedex/lottery.git")
           }
-        />
+        />*/}
       </main>
     </div>
   );
