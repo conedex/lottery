@@ -648,23 +648,40 @@ function App() {
   const [lastWinner, setLastWinner] = useState("");
   const [lastPrize, setLastPrize] = useState(0);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [wrongNetwork, setWrongNetwork] = useState(false);
 
   useEffect(() => {
     if (window.ethereum) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const contract = new ethers.Contract(
-        CONTRACT_ADDRESS,
-        LOTTERY_ABI,
-        provider
-      );
-      const tokenContract = new ethers.Contract(
-        TOKEN_CONTRACT_ADDRESS,
-        TOKEN_ABI,
-        provider
-      );
-      setProvider(provider);
-      setContract(contract);
-      setTokenContract(tokenContract);
+      window.ethereum.request({ method: "net_version" }).then((networkId) => {
+        if (networkId === "80001") {
+          // Check if network ID is equal to Polygon Mumbai Testnet (80001)
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          const contract = new ethers.Contract(
+            CONTRACT_ADDRESS,
+            LOTTERY_ABI,
+            provider
+          );
+          const tokenContract = new ethers.Contract(
+            TOKEN_CONTRACT_ADDRESS,
+            TOKEN_ABI,
+            provider
+          );
+          setProvider(provider);
+          setContract(contract);
+          setTokenContract(tokenContract);
+          setWrongNetwork(false);
+        } else {
+          setWrongNetwork(true);
+        }
+      });
+      window.ethereum.on("chainChanged", (chainId) => {
+        if (parseInt(chainId, 16) === 80001) {
+          setWrongNetwork(false);
+          // Re-initialize your contracts here if needed
+        } else {
+          setWrongNetwork(true);
+        }
+      });
     }
   }, []);
 
@@ -672,7 +689,26 @@ function App() {
     const accounts = await window.ethereum.request({
       method: "eth_requestAccounts",
     });
-    setAccount(accounts[0]);
+    const networkId = await window.ethereum.request({
+      method: "net_version",
+    });
+    if (networkId !== "80001") {
+      setWrongNetwork(true);
+    } else {
+      setAccount(accounts[0]);
+      setWrongNetwork(false);
+    }
+  };
+
+  const switchNetwork = async () => {
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x13881" }], // 0x13881 is the chainId for Polygon Mumbai Testnet
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const fetchLotteryInfo = async () => {
@@ -730,7 +766,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {account ? (
+        {wrongNetwork ? (
+          <button onClick={switchNetwork}>Wrong Network</button>
+        ) : account ? (
           account.substring(0, 5) +
           "..." +
           account.substring(account.length - 3)
