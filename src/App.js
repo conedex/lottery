@@ -724,15 +724,46 @@ function App() {
     try {
       const signer = provider.getSigner();
       const contractWithSigner = contract.connect(signer);
+      const tokenContractWithSigner = tokenContract.connect(signer);
+
+      // Check allowance
+      const allowance = await tokenContractWithSigner.allowance(
+        account,
+        CONTRACT_ADDRESS
+      );
+      const requiredAllowance = ethers.utils.parseUnits("1000000", 18); // 1000000 tokens with 18 decimals
+
+      if (allowance.lt(requiredAllowance)) {
+        // If allowance is less than required, ask for approval
+        const tx = await tokenContractWithSigner.approve(
+          CONTRACT_ADDRESS,
+          requiredAllowance
+        );
+        await tx.wait();
+
+        // Check allowance again after approval
+        const newAllowance = await tokenContractWithSigner.allowance(
+          account,
+          CONTRACT_ADDRESS
+        );
+        if (newAllowance.lt(requiredAllowance)) {
+          // If allowance is still less than required, stop execution
+          setErrorMessage("Please Approve Contract");
+          return;
+        }
+      }
+
+      // If allowance is sufficient, enter lottery
       const tx = await contractWithSigner.enterLottery();
       await tx.wait();
       fetchLotteryInfo();
-      setErrorMessage(null);
+      setErrorMessage(null); // clear any previous error messages
     } catch (error) {
       if (error.code === 4001) {
+        // error code for user rejected transaction
         setErrorMessage("Transaction was not approved.");
       } else {
-        setErrorMessage("Please Approve Contract");
+        setErrorMessage("An error occurred.");
       }
     }
   };
@@ -787,9 +818,6 @@ function App() {
           </p>
           <p>Amount in current Lottery: {currentPool} CONE</p>
           <p>Entry Amount: 1.000.000 CONE</p>
-          <button onClick={approveContract} disabled={!account}>
-            Approve Contract
-          </button>
           {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
           <button onClick={enterLottery} disabled={!account}>
             Enter Lottery
