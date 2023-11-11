@@ -649,6 +649,7 @@ function App() {
   const [lastPrize, setLastPrize] = useState(0);
   const [errorMessage, setErrorMessage] = useState(null);
   const [wrongNetwork, setWrongNetwork] = useState(false);
+  const [countdown, setCountdown] = useState("");
 
   useEffect(() => {
     if (window.ethereum) {
@@ -683,6 +684,24 @@ function App() {
         }
       });
     }
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const now = new Date();
+      const tomorrow = new Date(now);
+      tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+      tomorrow.setUTCHours(0, 0, 0, 0);
+      const difference = tomorrow - now;
+
+      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((difference / 1000 / 60) % 60);
+      const seconds = Math.floor((difference / 1000) % 60);
+
+      setCountdown(`${hours}:${minutes}:${seconds}`);
+    }, 1000);
+
+    return () => clearInterval(intervalId); // Clear interval on component unmount
   }, []);
 
   const connectWallet = async () => {
@@ -810,12 +829,7 @@ function App() {
       <main>
         <h1>BitCone Lottery</h1>
         <div className="lottery-info">
-          <p>
-            Next pull on:{" "}
-            {new Date(
-              Date.now() + 1 * 24 * 60 * 60 * 1000
-            ).toLocaleDateString()}
-          </p>
+          <p>Next pull in: {countdown}</p>
           <p>Amount in current Lottery: {currentPool} CONE</p>
           <p>Entry Amount: 1.000.000 CONE</p>
           {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
@@ -834,31 +848,53 @@ function App() {
         </div>
         <div className="faq-section">
           <h2>FAQs</h2>
-          <Collapse defaultActiveKey={["1"]} className="faq-collapse">
+          <Collapse defaultActiveKey={["0"]} className="faq-collapse">
             <Panel header="How does this Lottery work?" key="1">
               <p>
-                Our Smart Contract uses Chainlink VRF to guarantee 100%
-                unpredictable randomness. We also utilize Chainlink Upkeeps to
-                keep the contract running automatically.
+                Users can purchase Lottery Tickets for a fixed price in CONE per
+                Ticket. At the end of each Lottery round a winning ticket is
+                randomly selected to win the Prize Pot!
               </p>
             </Panel>
-            <Panel header="Is there any kind of fee to play?" key="2">
+            <Panel header="How often is a winner selected?" key="2">
               <p>
-                Yes, there is a % fee on the Prize which goes to the Creator,
-                since using Chainlink costs LINK on every transaction.
+                A winner is selected at the end of each Lottery round. Each
+                round lasts for 7 days, you may view the next Winner pull date
+                at the top of the website!
+              </p>
+            </Panel>
+            <Panel header="How are winners selected?" key="3">
+              <p>
+                Our Lottery Smart Contract uses Chainlink VRF to guarantee 100%
+                unpredictable randomness when selecting a winning ticket. We
+                also utilize Chainlink Upkeeps to keep the contract running
+                automatically.
+              </p>
+            </Panel>
+            <Panel header="How many tickets can I buy?" key="4">
+              <p>
+                The current fee for an entry ticket is 1,000,000 CONE. Each user
+                can purchase an unlimited amount of tickets, but only 1 ticket
+                can be purchased per transaction.
+              </p>
+            </Panel>
+            <Panel header="Is there any kind of fee to play?" key="5">
+              <p>
+                There is no fee to purchase Lottery Tickets, but there is a 10%
+                fee on the Prize Pool. 5% of which goes to the Bitcone Treasury
+                Wallet, along with a 5% fee which goes to the Creator to cover
+                $LINK Chainlink utilization costs on every transaction, as well
+                as operational and hosting costs.
               </p>
             </Panel>
             <Panel
               header="What are the benefits of using this Lottery?"
-              key="3"
+              key="6"
             >
               <p>
-                The owner can not influence the outcome of the Lottery, and
-                using this smart contract ensures that all users get an equal
-                chance to win. The amount of CONE granted when winning is fair
-                and the Lottery host doesnt make more CONE then the prize is
-                worth. Additionally this smart contract is open source and can
-                be audited by anyone.
+                The Lottery Smart contract is immutable, this means the owner
+                can not influnce the outcome of the Lottery. Using this smart
+                contract ensures that each Ticket gets an equal chance to win!
               </p>
             </Panel>
           </Collapse>
