@@ -787,26 +787,6 @@ function App() {
     }
   };
 
-  const approveContract = async () => {
-    try {
-      const signer = provider.getSigner();
-      const tokenContractWithSigner = tokenContract.connect(signer);
-      const amount = ethers.utils.parseUnits("1000000", 18); // 1000000 tokens with 18 decimals
-      const tx = await tokenContractWithSigner.approve(
-        CONTRACT_ADDRESS,
-        amount
-      );
-      await tx.wait();
-      setErrorMessage(null);
-    } catch (error) {
-      if (error.code === 4001) {
-        setErrorMessage("Transaction was not approved.");
-      } else {
-        setErrorMessage("An error occurred.");
-      }
-    }
-  };
-
   useEffect(() => {
     if (contract) {
       fetchLotteryInfo();
@@ -831,7 +811,7 @@ function App() {
         <div className="lottery-info">
           <p>Next pull in: {countdown}</p>
           <p>Amount in current Lottery: {currentPool} CONE</p>
-          <p>Entry Amount: 1.000.000 CONE</p>
+          <p>Entry Amount: 1,000,000 CONE</p>
           {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
           <button onClick={enterLottery} disabled={!account}>
             Enter Lottery
