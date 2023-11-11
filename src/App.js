@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Collapse } from "antd";
-import { InfoCircleOutlined } from "@ant-design/icons";
+import { Collapse } from "antd";
 import "./App.css";
 
 const { ethers } = require("ethers");
