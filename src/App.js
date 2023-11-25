@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Collapse } from "antd";
+import polygonLogo from './images/polygonlogo.png';
+import bitconeLogo from './images/bitcone192.png';
 import "./App.css";
 
 const { ethers } = require("ethers");
@@ -795,18 +797,21 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {wrongNetwork ? (
-          <button onClick={switchNetwork}>Wrong Network</button>
-        ) : account ? (
-          account.substring(0, 5) +
-          "..." +
-          account.substring(account.length - 3)
-        ) : (
-          <button onClick={connectWallet}>Connect Wallet</button>
-        )}
-      </header>
+      {wrongNetwork ? (
+        <button onClick={switchNetwork}>Wrong Network</button>
+      ) : account ? (
+        <>
+          <img src={polygonLogo} alt="Polygon Image" className="wallet-image" style={{ marginRight: '10px' }} />
+          {account.substring(0, 5) +
+            "..." +
+            account.substring(account.length - 3)}
+        </>
+      ) : (
+        <button onClick={connectWallet}>Connect Wallet</button>
+      )}
+    </header>
       <main>
-        <h1>BitCone Lottery</h1>
+        <h1><img src={bitconeLogo} alt="Bitcone Logo Left" className="bitcone-header" style={{ marginRight: '1%', marginLeft: '1%' }} />BitCone Lottery<img src={bitconeLogo} alt="Bitcone Logo Left" className="bitcone-header" style={{ marginRight: '1%', marginLeft: '1%' }} /></h1>
         <div className="lottery-info">
           <p>Next pull in: {countdown}</p>
           <p>Amount in current Lottery: {currentPool} CONE</p>
