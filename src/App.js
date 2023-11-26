@@ -248,7 +248,7 @@ function App() {
               "..." +
               lastWinner.substring(lastWinner.length - 3)}
           </p>
-          <p>Last amount won: {lastPrize} CONE</p>
+          <p>Last amount won: {formatNumber(lastPrize)} CONE</p>
         </div>
         <div className="faq-section">
           <h2>FAQs</h2>
