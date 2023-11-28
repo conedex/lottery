@@ -42,7 +42,7 @@ h1 {
 }
 
 .lottery-info {
-  width: 90%;
+  width: 25%;
   margin: 0 auto;
   border: 1px solid #000;
   border-radius: 10px;
@@ -53,9 +53,9 @@ h1 {
 }
 
 .lastWinner {
-  width: 90%;
+  width: 25%;
   margin: 0 auto;
-  margin-top: 10%;
+  margin-top: 2%;
   border: 1px solid #000;
   box-shadow: 10px 5px 5px goldenrod;
   box-sizing: border-box;
@@ -81,42 +81,69 @@ h1 {
 }
 
 .faq-collapse {
-  width: 90%;
-  min-width: 300px;
+  width: 25%;
   margin: 0 auto;
 }
 
 .wallet-image {
-  width: 5%;
+  width: 10%;
   height: auto;
+  margin-right: 5%;
+}
+
+.wallet-info {
+  cursor: pointer;
+  margin-left: 90%;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 0.25%;
+  box-shadow: 5px 2.5px 5px black;
 }
 
 .bitcone-header {
-  width: 7%;
+  width: 2.5%;
   height: auto;
 }
 
-@media (min-width: 1024px) {
-  .lottery-info {
-    width: 25%;
-  }
+.footer {
+  display: flex;
+  width: 35%;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+}
 
-  .lastWinner {
-    width: 25%;
-    margin-top: 2%;
-  }
-
+@media (max-width: 1023px) {
+  .lottery-info,
+  .lastWinner,
   .faq-collapse {
-    width: 25%;
+    width: 90%;
   }
 
   .wallet-image {
-    width: 1%;
+    width: 5%;
     height: auto;
   }
 
   .bitcone-header {
-    width: 2.5%;
+    width: 7%;
     height: auto;
+  }
+
+  .footer {
+    width: 100%;
+  }
+
+  .wallet-info {
+    border: 0.5px solid #000;
+    border-radius: 5px;
+    margin-left: 65%;
+    padding: 1%;
+  }
+
+  .wallet-image {
+    width: 15%;
+    height: auto;
+    margin-right: 10%;
   }
 }

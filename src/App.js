@@ -25,6 +25,15 @@ function App() {
   const [wrongNetwork, setWrongNetwork] = useState(false);
   const [countdown, setCountdown] = useState("");
   const [transactionHash, setTransactionHash] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
 
   useEffect(() => {
     if (window.ethereum) {
@@ -125,7 +134,7 @@ function App() {
         account,
         CONTRACT_ADDRESS
       );
-      const requiredAllowance = ethers.utils.parseUnits("1000000", 18); // 1000000 tokens with 18 decimals
+      const requiredAllowance = ethers.utils.parseUnits("10000000", 18); // 1000000 tokens with 18 decimals
 
       if (allowance.lt(requiredAllowance)) {
         // If allowance is less than required, ask for approval
@@ -198,23 +207,49 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {wrongNetwork ? (
-          <button onClick={switchNetwork}>Wrong Network</button>
-        ) : account ? (
-          <>
-            <img
-              src={polygonLogo}
-              alt="Polygon Image"
-              className="wallet-image"
-              style={{ marginRight: "10px" }}
-            />
-            {account.substring(0, 5) +
-              "..." +
-              account.substring(account.length - 3)}
-          </>
-        ) : (
-          <button onClick={connectWallet}>Connect Wallet</button>
-        )}
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          {wrongNetwork ? (
+            <button onClick={switchNetwork}>Wrong Network</button>
+          ) : account ? (
+            <>
+              <div className="header-right">
+                <div className="wallet-info" onClick={showModal}>
+                  <img
+                    src={polygonLogo}
+                    alt="Polygon Image"
+                    className="wallet-image"
+                    style={{ marginRight: "10px" }}
+                  />
+                  {account.substring(0, 5) +
+                    "..." +
+                    account.substring(account.length - 3)}
+                </div>
+              </div>
+              <div style={{ width: 0 }}>
+                <Modal
+                  title="Profile"
+                  open={isModalVisible}
+                  onOk={handleOk}
+                  onCancel={handleOk}
+                  footer={null}
+                >
+                  <p className="modal-wallet-info">
+                    Account Wallet:{" "}
+                    <a
+                      href={`https://mumbai.polygonscan.com/address/${account}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {account}
+                    </a>
+                  </p>
+                </Modal>
+              </div>
+            </>
+          ) : (
+            <button onClick={connectWallet}>Connect Wallet</button>
+          )}
+        </div>
       </header>
       <main>
         <h1>
