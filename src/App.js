@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Collapse, Modal, message } from "antd";
+import { Collapse, Modal, message, Alert } from "antd";
 import polygonLogo from "./images/polygonlogo.png";
 import bitconeLogo from "./images/bitcone192.png";
 import LOTTERY_ABI from "./abis/Lottery.json";
@@ -267,6 +267,12 @@ function App() {
             style={{ marginRight: "1%", marginLeft: "1%" }}
           />
         </h1>
+        <Alert
+          type="warning"
+          description="For optimal experience, please access our Lottery using a desktop browser instead of a mobile wallet's in-app browser."
+          showIcon={true}
+          className="alert"
+        />
         <div className="lottery-info">
           <p>Next pull in: {countdown}</p>
           <p>Amount in current Lottery: {formatNumber(currentPool)} CONE</p>

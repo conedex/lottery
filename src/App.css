@@ -12,6 +12,10 @@
   padding-right: 20px;
 }
 
+.alert {
+  margin: auto 37.5% 1% 37.5%;
+}
+
 button {
   border: 1px solid #000;
   border-radius: 10px;
@@ -145,5 +149,10 @@ h1 {
     width: 15%;
     height: auto;
     margin-right: 10%;
+  }
+
+  .alert {
+    margin: auto 7% 12.5% 7%;
+    font-size: 0.75rem;
   }
 }
