@@ -10,7 +10,7 @@ const { ethers } = require("ethers");
 
 const { Panel } = Collapse;
 
-const CONTRACT_ADDRESS = "0xB3bA5A82263728c0128649BBeF634f64c2865F86";
+const CONTRACT_ADDRESS = "0x400e73B088546C97617919efAAE9Aff003f17a39";
 const TOKEN_CONTRACT_ADDRESS = "0x80273525B1548EeA1f211f4218Cf30c1a7C86b25";
 
 function App() {
