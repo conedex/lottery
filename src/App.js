@@ -134,15 +134,26 @@ function App() {
         account,
         CONTRACT_ADDRESS
       );
-      const requiredAllowance = ethers.utils.parseUnits("10000000", 18); // 1000000 tokens with 18 decimals
+      const requiredAllowance = ethers.utils.parseUnits("1000000", 18); // 1000000 tokens with 18 decimals
 
       if (allowance.lt(requiredAllowance)) {
         // If allowance is less than required, ask for approval
+        const allowanceMessageKey = "allowanceMessage";
+        message.loading({
+          content: "Processing Allowance for Contract...",
+          key: allowanceMessageKey,
+          duration: 30,
+        });
         const tx = await tokenContractWithSigner.approve(
           CONTRACT_ADDRESS,
           requiredAllowance
         );
         await tx.wait();
+        message.success({
+          content: "Successfully granted Allowance",
+          key: allowanceMessageKey,
+          duration: 60,
+        });
 
         // Check allowance again after approval
         const newAllowance = await tokenContractWithSigner.allowance(
