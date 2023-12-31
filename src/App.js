@@ -10,8 +10,8 @@ const { ethers } = require("ethers");
 
 const { Panel } = Collapse;
 
-const CONTRACT_ADDRESS = "0x400e73B088546C97617919efAAE9Aff003f17a39";
-const TOKEN_CONTRACT_ADDRESS = "0x80273525B1548EeA1f211f4218Cf30c1a7C86b25";
+const CONTRACT_ADDRESS = "0xF038747b6A3D44b03E7EFD7AC21c539701C95DAe";
+const TOKEN_CONTRACT_ADDRESS = "0xbA777aE3a3C91fCD83EF85bfe65410592Bdd0f7c";
 
 function App() {
   const [provider, setProvider] = useState(null);
@@ -38,8 +38,7 @@ function App() {
   useEffect(() => {
     if (window.ethereum) {
       window.ethereum.request({ method: "net_version" }).then((networkId) => {
-        if (networkId === "80001") {
-          // Check if network ID is equal to Polygon Mumbai Testnet (80001)
+        if (networkId === "137") {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const contract = new ethers.Contract(
             CONTRACT_ADDRESS,
@@ -60,7 +59,7 @@ function App() {
         }
       });
       window.ethereum.on("chainChanged", (chainId) => {
-        if (parseInt(chainId, 16) === 80001) {
+        if (parseInt(chainId, 16) === 137) {
           setWrongNetwork(false);
           // Re-initialize your contracts here if needed
         } else {
@@ -95,7 +94,7 @@ function App() {
     const networkId = await window.ethereum.request({
       method: "net_version",
     });
-    if (networkId !== "80001") {
+    if (networkId !== "137") {
       setWrongNetwork(true);
     } else {
       setAccount(accounts[0]);
@@ -107,7 +106,7 @@ function App() {
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x13881" }], // 0x13881 is the chainId for Polygon Mumbai Testnet
+        params: [{ chainId: "0x89" }],
       });
     } catch (error) {
       console.error(error);
@@ -180,7 +179,7 @@ function App() {
           <>
             Successfully entered the Lottery.
             <a
-              href={`https://mumbai.polygonscan.com/tx/${tx.hash}`}
+              href={`https://polygonscan.com/tx/${tx.hash}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{ marginLeft: "10px" }}
@@ -247,7 +246,7 @@ function App() {
                   <p className="modal-wallet-info">
                     Account Wallet:{" "}
                     <a
-                      href={`https://mumbai.polygonscan.com/address/${account}`}
+                      href={`https://polygonscan.com/address/${account}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -287,7 +286,7 @@ function App() {
         <div className="lottery-info">
           <p>Next pull in: {countdown}</p>
           <p>Amount in current Lottery: {formatNumber(currentPool)} CONE</p>
-          <p>Entry Amount: 100.000 CONE</p>
+          <p>Entry Amount: 10.000 CONE</p>
           {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
           <button onClick={enterLottery} disabled={!account}>
             Enter Lottery
