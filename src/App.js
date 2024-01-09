@@ -278,6 +278,12 @@ function App() {
           />
         </h1>
         <Alert
+          type="danger"
+          description="Lottery is currently paused and will resume soon after implementing more features for you. Thanks for everyone participating in our Beta and congratulations to our winners!"
+          showIcon={true}
+          className="danger"
+        />
+        <Alert
           type="warning"
           description="For optimal experience, please access our Lottery using a desktop browser instead of a mobile wallet's in-app browser."
           showIcon={true}
@@ -288,7 +294,7 @@ function App() {
           <p>Amount in current Lottery: {formatNumber(currentPool)} CONE</p>
           <p>Entry Amount: 10,000 CONE</p>
           {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-          <button onClick={enterLottery} disabled={!account}>
+          <button onClick={enterLottery} disabled=/*{!account}*/{true}>
             Enter Lottery
           </button>
         </div>
