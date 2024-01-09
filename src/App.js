@@ -133,7 +133,7 @@ function App() {
         account,
         CONTRACT_ADDRESS
       );
-      const requiredAllowance = ethers.utils.parseUnits("1000000", 18); // 1000000 tokens with 18 decimals
+      const requiredAllowance = ethers.utils.parseUnits("100000", 18); // 1000000 tokens with 18 decimals
 
       if (allowance.lt(requiredAllowance)) {
         // If allowance is less than required, ask for approval
@@ -151,7 +151,7 @@ function App() {
         message.success({
           content: "Successfully granted Allowance",
           key: allowanceMessageKey,
-          duration: 60,
+          duration: 30,
         });
 
         // Check allowance again after approval
@@ -328,7 +328,7 @@ function App() {
             </Panel>
             <Panel header="How many tickets can I buy?" key="4">
               <p>
-                The current fee for an entry ticket is 1,000,000 CONE. Each user
+                The current fee for an entry ticket is 10,000 CONE. Each user
                 can purchase an unlimited amount of tickets, but only 1 ticket
                 can be purchased per transaction.
               </p>
