@@ -286,7 +286,7 @@ function App() {
         <div className="lottery-info">
           <p>Next pull in: {countdown}</p>
           <p>Amount in current Lottery: {formatNumber(currentPool)} CONE</p>
-          <p>Entry Amount: 10.000 CONE</p>
+          <p>Entry Amount: 10,000 CONE</p>
           {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
           <button onClick={enterLottery} disabled={!account}>
             Enter Lottery
