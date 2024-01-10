@@ -278,10 +278,10 @@ function App() {
           />
         </h1>
         <Alert
-          type="danger"
-          description="Lottery is currently paused and will resume soon after implementing more features for you. Thanks for everyone participating in our Beta and congratulations to our winners!"
+          type="error"
+          description="The Lottery is currently paused and will resume soon. Thank you everyone for participating in the Beta Test!"
           showIcon={true}
-          className="danger"
+          className="alert"
         />
         <Alert
           type="warning"
