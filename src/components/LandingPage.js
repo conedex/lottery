@@ -9,6 +9,11 @@ import bannerImage from "../images/CG_Banner.jpg";
 const LandingPage = () => {
   return (
     <div>
+      <a
+        href="https://rccmarketcap.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      ></a>
       <div className="banner">
         <img className="banner-image" src={bannerImage} alt="Banner" />
       </div>
