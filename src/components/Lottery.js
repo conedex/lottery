@@ -119,10 +119,14 @@ function App() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       const now = new Date();
-      const sevenDaysFromNow = new Date(now);
-      sevenDaysFromNow.setUTCDate(sevenDaysFromNow.getUTCDate() + 7);
-      sevenDaysFromNow.setUTCHours(0, 0, 0, 0);
-      const difference = sevenDaysFromNow - now;
+      const nextSunday = new Date(now);
+      nextSunday.setUTCDate(
+        now.getUTCDay() === 0
+          ? now.getUTCDate() + 7
+          : now.getUTCDate() + (7 - now.getUTCDay())
+      );
+      nextSunday.setUTCHours(0, 5, 0, 0);
+      const difference = nextSunday - now;
 
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
