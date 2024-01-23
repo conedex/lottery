@@ -11,6 +11,7 @@ const LandingPage = () => {
     <div>
       <div className="banner">
         <a
+          className="banner-link"
           href="https://rccmarketcap.com/"
           target="_blank"
           rel="noopener noreferrer"
