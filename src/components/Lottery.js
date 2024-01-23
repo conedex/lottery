@@ -195,7 +195,7 @@ function App() {
 
       // Check allowance
       const requiredAllowance = ethers.utils.parseUnits(
-        (10000 * numEntries).toString(),
+        (10001 * numEntries).toString(),
         18
       ); // Multiply the required allowance by the number of entries
       const allowance = await tokenContractWithSigner.allowance(
@@ -425,8 +425,8 @@ function App() {
             />
           </h1>
           <Alert
-            type="warning"
-            description="For optimal experience, please access our Lottery using a desktop browser instead of a mobile wallet's in-app browser."
+            type="info"
+            description="You can set your Allowance manually by clicking on your Profile on the top right where your Walletaddress is displayed."
             showIcon={true}
             className="alert"
           />
