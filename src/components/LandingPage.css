@@ -99,11 +99,14 @@
 }
 
 .banner-image {
-  max-width: 100%;
+  max-width: 50%;
   height: auto;
 }
 
 .banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: white;
 }
 
