@@ -494,18 +494,17 @@ function App() {
               </Panel>
               <Panel header="How many tickets can I buy?" key="4">
                 <p>
-                  The current fee for an entry ticket is 10.000 CONE. Each user
-                  can purchase an unlimited amount of tickets, but only 1 ticket
-                  can be purchased per transaction.
+                  The current price for an entry ticket is 10.000 CONE. Each
+                  user can purchase an unlimited amount of tickets.
                 </p>
               </Panel>
               <Panel header="Is there any kind of fee to play?" key="5">
                 <p>
                   There is no fee to purchase Lottery Tickets, but there is a
-                  15% fee on the Prize Pool. 5% of which goes to the Bitcone
-                  Treasury Wallet, along with a 10% fee which goes to the
-                  Creator to cover $LINK Chainlink utilization costs on every
-                  transaction, as well as operational and hosting costs.
+                  20% fee on the Prize Pool. 5% of which goes to the Bitcone
+                  Treasury Wallet, along with a 15% which goes to the Creator to
+                  cover $LINK Chainlink utilization costs on every transaction,
+                  as well as operational and hosting costs.
                 </p>
               </Panel>
               <Panel
