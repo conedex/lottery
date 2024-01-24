@@ -10,7 +10,7 @@ import NFT_ABI from "../abis/Nft.json";
 import "./Lottery.css";
 
 const { ethers } = require("ethers");
-
+const RPC_PROVIDER_URL = process.env.REACT_APP_RPC_PROVIDER_URL;
 const { Panel } = Collapse;
 
 const CONTRACT_ADDRESS = "0xeB1698983e58FDba52Ee43462Cd60C832EA89C1e";
@@ -52,6 +52,31 @@ function App() {
   };
 
   useEffect(() => {
+    // Create an instance of an ethers provider using the RPC URL
+    const rpcProvider = new ethers.providers.JsonRpcProvider(RPC_PROVIDER_URL);
+
+    // Set up contracts with the RPC provider
+    const contract = new ethers.Contract(
+      CONTRACT_ADDRESS,
+      LOTTERY_ABI,
+      rpcProvider
+    );
+    const tokenContract = new ethers.Contract(
+      TOKEN_CONTRACT_ADDRESS,
+      TOKEN_ABI,
+      rpcProvider
+    );
+    const nftContract = new ethers.Contract(
+      NFT_CONTRACT_ADDRESS,
+      NFT_ABI,
+      rpcProvider
+    );
+
+    setProvider(rpcProvider);
+    setContract(contract);
+    setTokenContract(tokenContract);
+    setNftContract(nftContract);
+
     if (window.ethereum) {
       window.ethereum.request({ method: "net_version" }).then((networkId) => {
         if (networkId === "137") {
