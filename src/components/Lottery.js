@@ -218,7 +218,7 @@ function App() {
 
       // Check allowance
       const requiredAllowance = ethers.utils.parseUnits(
-        (10001 * numEntries).toString(),
+        (10001 * numEntries + 1).toString(),
         18
       ); // Multiply the required allowance by the number of entries
       const allowance = await tokenContractWithSigner.allowance(
