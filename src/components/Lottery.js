@@ -53,10 +53,8 @@ function App() {
   };
 
   useEffect(() => {
-    // Create an instance of an ethers provider using the RPC URL
     const rpcProvider = new ethers.providers.JsonRpcProvider(RPC_PROVIDER_URL);
 
-    // Set up contracts with the RPC provider
     const contract = new ethers.Contract(
       CONTRACT_ADDRESS,
       LOTTERY_ABI,
@@ -135,7 +133,6 @@ function App() {
           setWrongNetwork(false);
         } else {
           setWrongNetwork(true);
-          // Show a message to the user asking them to switch to the supported network
           setErrorMessage("Please switch to the Polygon Mainnet.");
         }
       });

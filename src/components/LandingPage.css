@@ -138,4 +138,9 @@
   .logo {
     width: 30px; /* adjust as needed for mobile */
   }
+
+  .banner-image {
+    max-width: 100%;
+    height: auto;
+  }
 }
