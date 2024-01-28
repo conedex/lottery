@@ -1,0 +1,146 @@
+.vanta-hero {
+  background: rgb(255, 214, 151);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 214, 151, 1) 0%,
+    rgba(255, 255, 255, 1) 48%
+  );
+  background-size: cover;
+  background-position: center;
+  height: 50vh; /* Adjust the height as necessary */
+  text-align: center;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#vanta-hero h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+#vanta-hero p {
+  font-size: 1.2em;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.lottery-section {
+  margin-bottom: 40px;
+}
+
+.lottery-section h2 {
+  font-size: 1.8em;
+  color: #1890ff; /* Ant Design primary color */
+  margin-bottom: 15px;
+}
+
+.lottery-section p {
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+
+.ant-btn-primary {
+  background-color: #1890ff;
+  border-color: #1890ff;
+  font-size: 1.1em;
+  padding: 0.5em 1.5em;
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  background-color: #40a9ff;
+  border-color: #40a9ff;
+}
+
+.header {
+  background-color: black;
+  color: white;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Hero Section with Vanta.js */
+.vanta-hero {
+  height: 50vh; /* Adjust height as needed */
+  text-align: center;
+  color: black;
+}
+
+/* Main Content Section */
+.content-section {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 214, 151, 1) 48%
+  );
+  padding: 20px;
+}
+
+.lottery-section {
+  background-color: white;
+  border-radius: 15px;
+  margin: 20px 0;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+}
+
+.lottery-section h2 {
+  color: orange;
+}
+
+.logo {
+  width: 25%; /* adjust as needed for desktop */
+  height: auto;
+}
+
+.banner-image {
+  max-width: 50%;
+  height: auto;
+}
+
+.banner-link {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+@media (max-width: 767px) {
+  .vanta-root.fallback-background {
+    background-image: ("../images/background.png");
+    background-size: cover;
+    background-position: center;
+  }
+
+  .vanta-hero img {
+    width: 75%;
+  }
+
+  .lottery-section h2 {
+    font-size: 1.2em;
+  }
+
+  .lottery-section p {
+    font-size: 0.9em;
+  }
+
+  .logo {
+    width: 30px; /* adjust as needed for mobile */
+  }
+
+  .banner-image {
+    max-width: 100%;
+    height: auto;
+  }
+}

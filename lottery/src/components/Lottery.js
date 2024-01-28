@@ -39,12 +39,6 @@ function App() {
   const [nftContract, setNftContract] = useState(null);
   const [bonusCone, setBonusCone] = useState(0);
 
-  const staticLastWinner = "0xc9Bbb3a1119d1A47Ada1D0E9C3f0857B934CeCDe";
-  const staticLastPrize = "276.140.000";
-
-  const staticlotteryVersion = 1;
-  const staticcurrentPool = 0;
-
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -454,24 +448,24 @@ function App() {
             />
           </h1>
           <Alert
-            type="warning"
-            description="Thanks for playing and congratulations towards the Winner! The Lottery is shortly disabled for some slight improvements for the next round!"
+            type="info"
+            description="You can set your Allowance manually by clicking on your Profile on the top right where your Walletaddress is displayed."
             showIcon={true}
             className="alert"
           />
           <div className="lottery-info">
             <p>Next pull in: {countdown}</p>
-            <p>Current Lottery Version: {staticlotteryVersion}</p>
+            <p>Current Lottery Version: {lotteryVersion}</p>
             <p>
               Amount in current Lottery:{" "}
-              <strong>{formatNumber(staticcurrentPool)}</strong> CONE
+              <strong>{formatNumber(currentPool)}</strong> CONE
             </p>
-            {/*{bonusCone > 0 && (
+            {bonusCone > 0 && (
               <p>
                 Bonus CONE in Lottery:{" "}
                 <strong>{formatNumber(bonusCone)}</strong> CONE
               </p>
-            )}*/}
+            )}
             <p>Entry Amount: {formatNumber(numEntries * 10000)} CONE</p>
             <p>Number of entries: {numEntries}</p>
             <InputNumber
@@ -481,19 +475,19 @@ function App() {
               style={{ marginBottom: "10px" }}
             />
             {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-            <button onClick={enterLottery} disabled={true}>
+            <button onClick={enterLottery} disabled={!account}>
               Enter Lottery
             </button>
           </div>
           <div className="lastWinner">
             <p>
               Last Winner:{" "}
-              {staticLastWinner.substring(0, 5) +
+              {lastWinner.substring(0, 5) +
                 "..." +
-                staticLastWinner.substring(staticLastWinner.length - 3)}
+                lastWinner.substring(lastWinner.length - 3)}
             </p>
             <p>
-              Last amount won: <strong>{staticLastPrize}</strong> CONE
+              Last amount won: <strong>{formatNumber(lastPrize)}</strong> CONE
             </p>
           </div>
           <div className="faq-section">
