@@ -424,6 +424,15 @@
     "type": "function"
   },
   {
+    "inputs": [
+      { "internalType": "address", "name": "_nftContract", "type": "address" }
+    ],
+    "name": "setWinnerNFT",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "token",
     "outputs": [
@@ -498,6 +507,13 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "winnerNft",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "winnings",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
@@ -507,6 +523,13 @@
   {
     "inputs": [],
     "name": "withdrawLink",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawTokens",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

@@ -14,9 +14,9 @@ const RPC_PROVIDER_URL =
   "https://polygon-mainnet.g.alchemy.com/v2/h-Z-wdXCVF8V1sqWXguZC7oUAcaG7G3k";
 const { Panel } = Collapse;
 
-const CONTRACT_ADDRESS = "0xeB1698983e58FDba52Ee43462Cd60C832EA89C1e";
+const CONTRACT_ADDRESS = "0x1bc3a6B98624FD4966b1A680B19cf1675eADBB1B";
 const TOKEN_CONTRACT_ADDRESS = "0xbA777aE3a3C91fCD83EF85bfe65410592Bdd0f7c";
-const NFT_CONTRACT_ADDRESS = "0x430a5A2d0d97DAD51E82D6d2BA611BE22862B780";
+const NFT_CONTRACT_ADDRESS = "0xA2B35dFA644464e031d3a4BE36FD38Ad9BA896B6";
 
 function App() {
   const [provider, setProvider] = useState(null);
@@ -38,12 +38,6 @@ function App() {
   const [newAllowance, setNewAllowance] = useState(10000);
   const [nftContract, setNftContract] = useState(null);
   const [bonusCone, setBonusCone] = useState(0);
-
-  const staticLastWinner = "0xc9Bbb3a1119d1A47Ada1D0E9C3f0857B934CeCDe";
-  const staticLastPrize = "276.140.000";
-
-  const staticlotteryVersion = 1;
-  const staticcurrentPool = 0;
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -454,24 +448,30 @@ function App() {
             />
           </h1>
           <Alert
+            type="info"
+            description="Everyone who was a part of the Lottery has received a special gift in their Wallet. Thanks for playing and congratulations to our first winner!"
+            showIcon={true}
+            className="alert"
+          />
+          <Alert
             type="warning"
-            description="Thanks for playing and congratulations towards the Winner! The Lottery is shortly disabled for some slight improvements for the next round!"
+            description="Our current Lottery has a visual bug with the last winner. After the next pull it will be resolved. Sorry for the inconvenience. "
             showIcon={true}
             className="alert"
           />
           <div className="lottery-info">
             <p>Next pull in: {countdown}</p>
-            <p>Current Lottery Version: {staticlotteryVersion}</p>
+            <p>Current Lottery Version: {lotteryVersion}</p>
             <p>
               Amount in current Lottery:{" "}
-              <strong>{formatNumber(staticcurrentPool)}</strong> CONE
+              <strong>{formatNumber(currentPool)}</strong> CONE
             </p>
-            {/*{bonusCone > 0 && (
+            {bonusCone > 0 && (
               <p>
                 Bonus CONE in Lottery:{" "}
                 <strong>{formatNumber(bonusCone)}</strong> CONE
               </p>
-            )}*/}
+            )}
             <p>Entry Amount: {formatNumber(numEntries * 10000)} CONE</p>
             <p>Number of entries: {numEntries}</p>
             <InputNumber
@@ -481,19 +481,19 @@ function App() {
               style={{ marginBottom: "10px" }}
             />
             {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-            <button onClick={enterLottery} disabled={true}>
+            <button onClick={enterLottery} disabled={!account}>
               Enter Lottery
             </button>
           </div>
           <div className="lastWinner">
             <p>
               Last Winner:{" "}
-              {staticLastWinner.substring(0, 5) +
+              {lastWinner.substring(0, 5) +
                 "..." +
-                staticLastWinner.substring(staticLastWinner.length - 3)}
+                lastWinner.substring(lastWinner.length - 3)}
             </p>
             <p>
-              Last amount won: <strong>{staticLastPrize}</strong> CONE
+              Last amount won: <strong>{formatNumber(lastPrize)}</strong> CONE
             </p>
           </div>
           <div className="faq-section">
