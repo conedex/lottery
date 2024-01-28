@@ -449,7 +449,7 @@ function App() {
           </h1>
           <Alert
             type="info"
-            description="Everyone who was a part of the Lottery will receive a special gift in their Wallet. Thanks for playing and congratulations to our first winner!"
+            description="Everyone who was a part of the Lottery has received a special NFT as a gift. Thanks for playing and congratulations to our first winner!"
             showIcon={true}
             className="alert"
           />
