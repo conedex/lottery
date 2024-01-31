@@ -37,7 +37,6 @@ function App() {
   const [allowance, setAllowance] = useState(0);
   const [newAllowance, setNewAllowance] = useState(10000);
   const [nftContract, setNftContract] = useState(null);
-  const [bonusCone, setBonusCone] = useState(0);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -45,11 +44,6 @@ function App() {
 
   const handleOk = () => {
     setIsModalVisible(false);
-  };
-
-  const fetchBonusCone = async () => {
-    const balance = await tokenContract.balanceOf(NFT_CONTRACT_ADDRESS);
-    setBonusCone(ethers.utils.formatEther(balance));
   };
 
   useEffect(() => {
@@ -319,7 +313,6 @@ function App() {
   useEffect(() => {
     if (contract) {
       fetchLotteryInfo();
-      fetchBonusCone();
     }
   }, [contract]);
 
@@ -466,12 +459,10 @@ function App() {
               Amount in current Lottery:{" "}
               <strong>{formatNumber(currentPool)}</strong> CONE
             </p>
-            {bonusCone > 0 && (
-              <p>
-                Bonus CONE in Lottery:{" "}
-                <strong>{formatNumber(bonusCone)}</strong> CONE
-              </p>
-            )}
+            <p>
+              Maximum Amount of CONE in Lottery: <strong>30.000.000</strong>{" "}
+              CONE
+            </p>
             <p>Entry Amount: {formatNumber(numEntries * 10000)} CONE</p>
             <p>Number of entries: {numEntries}</p>
             <InputNumber
