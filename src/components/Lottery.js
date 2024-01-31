@@ -37,6 +37,7 @@ function App() {
   const [allowance, setAllowance] = useState(0);
   const [newAllowance, setNewAllowance] = useState(10000);
   const [nftContract, setNftContract] = useState(null);
+  const [isContractPaused, setIsContractPaused] = useState(false);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -45,6 +46,22 @@ function App() {
   const handleOk = () => {
     setIsModalVisible(false);
   };
+
+  const fetchContractPausedState = async () => {
+    try {
+      // Assuming your contract has a function called 'isPaused' that returns a boolean
+      const paused = await contract.isPaused();
+      setIsContractPaused(paused);
+    } catch (error) {
+      console.error("Error fetching contract paused state:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (contract) {
+      fetchContractPausedState();
+    }
+  }, [contract]); // Dependency array ensures this effect runs whenever the contract instance changes
 
   useEffect(() => {
     const rpcProvider = new ethers.providers.JsonRpcProvider(RPC_PROVIDER_URL);
@@ -448,7 +465,7 @@ function App() {
           />
           <Alert
             type="warning"
-            description="Our current Lottery has a visual bug with the last winner. After the next pull it will be resolved. Sorry for the inconvenience. "
+            description="Our current Lottery has a visual bug with the last winner. After the next pull it will be resolved. Additionally there is now a Softcap to the maxmimum Amount of Entries to our Lottery, which when reached will pause the Lottery."
             showIcon={true}
             className="alert"
           />
@@ -472,7 +489,10 @@ function App() {
               style={{ marginBottom: "10px" }}
             />
             {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-            <button onClick={enterLottery} disabled={!account}>
+            <button
+              onClick={enterLottery}
+              disabled={!account || isContractPaused}
+            >
               Enter Lottery
             </button>
           </div>
