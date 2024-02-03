@@ -14,9 +14,11 @@ const RPC_PROVIDER_URL =
   "https://polygon-mainnet.g.alchemy.com/v2/h-Z-wdXCVF8V1sqWXguZC7oUAcaG7G3k";
 const { Panel } = Collapse;
 
-const CONTRACT_ADDRESS = "0x1bc3a6B98624FD4966b1A680B19cf1675eADBB1B";
+const CONTRACT_ADDRESS = "0x8e1d49a6075e673f512f7A9D38EC925d84C0dD81";
 const TOKEN_CONTRACT_ADDRESS = "0xbA777aE3a3C91fCD83EF85bfe65410592Bdd0f7c";
 const NFT_CONTRACT_ADDRESS = "0xA2B35dFA644464e031d3a4BE36FD38Ad9BA896B6";
+const lastWinnerHardcodeAmount = "16.960.000";
+const lastWinnerHardcodeAddress = "0x89B3fdf5cd302D012f92a81341017252B7b9515a";
 
 function App() {
   const [provider, setProvider] = useState(null);
@@ -496,7 +498,7 @@ function App() {
               Enter Lottery
             </button>
           </div>
-          <div className="lastWinner">
+          {/*<div className="lastWinner">
             <p>
               Last Winner:{" "}
               {lastWinner.substring(0, 5) +
@@ -505,6 +507,15 @@ function App() {
             </p>
             <p>
               Last amount won: <strong>{formatNumber(lastPrize)}</strong> CONE
+            </p>
+              </div>*/}
+          <div className="lastWinner">
+            <p>
+              Last Winner: <strong>{lastWinnerHardcodeAddress}</strong>
+            </p>
+            <p>
+              Last amount won: <br></br>
+              <strong>{lastWinnerHardcodeAmount}</strong> CONE
             </p>
           </div>
           <div className="faq-section">
