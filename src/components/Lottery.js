@@ -478,10 +478,6 @@ function App() {
               Amount in current Lottery:{" "}
               <strong>{formatNumber(currentPool)}</strong> CONE
             </p>
-            <p>
-              Maximum Amount of CONE in Lottery: <strong>25.000.000</strong>{" "}
-              CONE
-            </p>
             <p>Entry Amount: {formatNumber(numEntries * 10000)} CONE</p>
             <p>Number of entries: {numEntries}</p>
             <InputNumber
