@@ -459,18 +459,12 @@ function App() {
               style={{ marginRight: "1%", marginLeft: "1%" }}
             />
           </h1>
-          <Alert
-            type="info"
-            description="Everyone who was a part of the Lottery has received a special NFT as a gift. Thanks for playing and congratulations to our first winner!"
-            showIcon={true}
-            className="alert"
-          />
-          <Alert
+          {/*<Alert
             type="warning"
-            description="Our current Lottery has a visual bug with the last winner. After the next pull it will be resolved. Additionally there is now a Softcap to the maxmimum Amount of Entries to our Lottery, which when reached will pause the Lottery."
+            description="For the best experience access our Lottery with a Browser on a Desktop."
             showIcon={true}
             className="alert"
-          />
+              />*/}
           <div className="lottery-info">
             <p>Next pull in: {countdown}</p>
             <p>Current Lottery Version: {lotteryVersion}</p>
