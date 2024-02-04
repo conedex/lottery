@@ -501,7 +501,7 @@ function App() {
               </div>*/}
           <div className="lastWinner">
             <p>
-              Last Winner: {""}
+              Last Winner: <br></br>
               <strong>{lastWinnerHardcodeAddress}</strong>
             </p>
             <p>
