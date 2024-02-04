@@ -19,6 +19,7 @@ const TOKEN_CONTRACT_ADDRESS = "0xbA777aE3a3C91fCD83EF85bfe65410592Bdd0f7c";
 const NFT_CONTRACT_ADDRESS = "0xA2B35dFA644464e031d3a4BE36FD38Ad9BA896B6";
 const lastWinnerHardcodeAmount = "16.960.000";
 const lastWinnerHardcodeAddress = "0x89B3fdf5cd302D012f92a81341017252B7b9515a";
+const coneTreasuryAmountHardcoded = "1.060.000";
 
 function App() {
   const [provider, setProvider] = useState(null);
@@ -513,6 +514,10 @@ function App() {
             <p>
               Last amount won: <br></br>
               <strong>{lastWinnerHardcodeAmount}</strong> CONE
+            </p>
+            <p>
+              Amount sent to CONE Treasuy: <br></br>
+              <strong>{coneTreasuryAmountHardcoded}</strong> CONE
             </p>
           </div>
           <div className="faq-section">
