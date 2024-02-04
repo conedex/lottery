@@ -502,7 +502,13 @@ function App() {
           <div className="lastWinner">
             <p>
               Last Winner: <br></br>
-              <strong>{lastWinnerHardcodeAddress}</strong>
+              <strong>
+                {lastWinnerHardcodeAddress.substring(0, 8) +
+                  "..." +
+                  lastWinnerHardcodeAddress.substring(
+                    lastWinnerHardcodeAddress.length - 3
+                  )}
+              </strong>
             </p>
             <p>
               Last amount won: <br></br>
