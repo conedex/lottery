@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
 import "./LandingPage.css";
-import bitconewinlogo from "../images/bitconewinlogo.png";
+import bitconewinlogo from "../images/bitconewinlogolargenew.png";
 import bannerImage from "../images/CG_Banner.jpg";
 
 // LandingPage component
