@@ -492,13 +492,16 @@ function App() {
           </div>
           <div className="lastWinner">
             <p>
-              Last Winner:{" "}
-              {lastWinner.substring(0, 5) +
-                "..." +
-                lastWinner.substring(lastWinner.length - 3)}
+              Last Winner:<br></br>
+              <strong>
+                {lastWinner.substring(0, 5) +
+                  "..." +
+                  lastWinner.substring(lastWinner.length - 5)}
+              </strong>
             </p>
             <p>
-              Last amount won: <strong>{formatNumber(lastPrize)}</strong> CONE
+              Last amount won: <br></br>
+              <strong>{formatNumber(lastPrize)}</strong> CONE
             </p>
             <p>
               Amount sent to CONE Treasuy: <br></br>
