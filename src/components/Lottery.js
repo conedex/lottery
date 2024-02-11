@@ -19,7 +19,8 @@ const TOKEN_CONTRACT_ADDRESS = "0xbA777aE3a3C91fCD83EF85bfe65410592Bdd0f7c";
 const NFT_CONTRACT_ADDRESS = "0xA2B35dFA644464e031d3a4BE36FD38Ad9BA896B6";
 const lastWinnerHardcodeAmount = "16.960.000";
 const lastWinnerHardcodeAddress = "0x89B3fdf5cd302D012f92a81341017252B7b9515a";
-const coneTreasuryAmountHardcoded = "1.060.000";
+const coneTreasuryAmountHardcodedOverall = "2.037.500";
+const coneTreasuryAmountHardcoded = "977.500";
 
 function App() {
   const [provider, setProvider] = useState(null);
@@ -489,7 +490,7 @@ function App() {
               Enter Lottery
             </button>
           </div>
-          {/*<div className="lastWinner">
+          <div className="lastWinner">
             <p>
               Last Winner:{" "}
               {lastWinner.substring(0, 5) +
@@ -499,8 +500,16 @@ function App() {
             <p>
               Last amount won: <strong>{formatNumber(lastPrize)}</strong> CONE
             </p>
-              </div>*/}
-          <div className="lastWinner">
+            <p>
+              Amount sent to CONE Treasuy: <br></br>
+              <strong>{coneTreasuryAmountHardcoded}</strong> CONE
+            </p>
+            <p>
+              Amount sent to CONE Treasuy overall: <br></br>
+              <strong>{coneTreasuryAmountHardcodedOverall}</strong> CONE
+            </p>
+          </div>
+          {/*<div className="lastWinner">
             <p>
               Last Winner: <br></br>
               <strong>
@@ -519,7 +528,7 @@ function App() {
               Amount sent to CONE Treasuy: <br></br>
               <strong>{coneTreasuryAmountHardcoded}</strong> CONE
             </p>
-          </div>
+                  </div>*/}
           <div className="faq-section">
             <h2>FAQs</h2>
             <Collapse defaultActiveKey={["0"]} className="faq-collapse">
