@@ -42,6 +42,18 @@ const LandingPage = () => {
           </Link>
         </div>
         <div className="lottery-section">
+          <h2>Documentation</h2>
+          <p>
+            Learn more about the lottery, any future plans and how to contact
+            us.
+          </p>
+          <Link to="https://conedex.gitbook.io/bitcone.win/">
+            <Button type="default" size="large">
+              Enter Documentation
+            </Button>
+          </Link>
+        </div>
+        <div className="lottery-section">
           <h2>What is BitCone?</h2>
           <p>
             BitCone (CONE) is a Decentralized Community Utility Token made by
