@@ -4,6 +4,7 @@
   text-align: center;
   min-height: 100vh;
   background: black;
+  width: 100%;
 }
 
 .highscore-image {
@@ -36,6 +37,10 @@
   color: white;
   list-style-type: none;
   padding: 0;
+}
+
+.highscore-foooter {
+  margin-bottom: 10%;
 }
 
 @media (max-width: 768px) {

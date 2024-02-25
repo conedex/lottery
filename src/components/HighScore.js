@@ -103,6 +103,7 @@ const HighScore = () => {
               </li>
             ))}
           </ol>
+          <div className="highscore-footer"></div>
         </div>
       </div>
     </div>
