@@ -54,20 +54,14 @@ const LandingPage = () => {
           </Link>
         </div>
         <div className="lottery-section">
-          <h2>What is BitCone?</h2>
+          <h2>High-Scores</h2>
           <p>
-            BitCone (CONE) is a Decentralized Community Utility Token made by
-            Cones, for Cones. 608 Billion tokens were created on the Polygon
-            Network (with no mint function) to parallel the 608 Cone Head -
-            Reddit Collectible Avatar NFT, that inspired a meme Conemunity.
-            BitCone is governed democratically, so every decision is voted on
-            via Conemunity Polls. BitCones can be earned through Airdrops and
-            "BitCone Mining", a revolutionary automated content monetization
-            platform, that incentivizes user engagement on partnered Subreddits.
+            How high was the highest win? Who won the most? Who won when? Check
+            it out under our HighScore Page!
           </p>
-          <Link to="https://bitcone.lol/">
+          <Link to="/highscore">
             <Button type="default" size="large">
-              Click for more information
+              Enter High-Scores
             </Button>
           </Link>
         </div>
