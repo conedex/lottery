@@ -504,11 +504,11 @@ function App() {
               <strong>{formatNumber(lastPrize)}</strong> CONE
             </p>
             <p>
-              Amount sent to CONE Treasuy: <br></br>
+              Amount sent to CONE Treasury: <br></br>
               <strong>{coneTreasuryAmountHardcoded}</strong> CONE
             </p>
             <p>
-              Amount sent to CONE Treasuy overall: <br></br>
+              Amount sent to CONE Treasury overall: <br></br>
               <strong>{coneTreasuryAmountHardcodedOverall}</strong> CONE
             </p>
           </div>
