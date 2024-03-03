@@ -28,5 +28,11 @@
     "amount": "18.888.000",
     "amountInNumber": 18888000,
     "wallet": "Simple_Mastodon9220"
+  },
+  {
+    "version": 6,
+    "amount": "28.096.000",
+    "amountInNumber": 28096000,
+    "wallet": "ImAlekBan"
   }
 ]
