@@ -42,6 +42,15 @@ const LandingPage = () => {
           </Link>
         </div>
         <div className="lottery-section">
+          <h2>GODL: Our Premier Sponsored Lottery</h2>
+          <p>We proudly present our GODL lottery. 3 Weekly GODL Winners!</p>
+          <Link to="/godllottery">
+            <Button type="default" size="large">
+              Enter GODL Lottery
+            </Button>
+          </Link>
+        </div>
+        <div className="lottery-section">
           <h2>Documentation</h2>
           <p>
             Learn more about the lottery, any future plans and how to contact
