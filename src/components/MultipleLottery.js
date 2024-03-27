@@ -504,8 +504,8 @@ function App() {
               Amount in current Lottery:{" "}
               <strong>{formatNumber(currentPool)}</strong> GODL
             </p>
-            <p>Entry Amount: {formatNumber(numEntries / 0.000023)} Entries</p>
-            <p>Number of entries: {numEntries}</p>
+            <p>Entry Amount: {numEntries} GODL</p>
+            <p>Number of entries: {formatNumber(numEntries / 0.000023)}</p>
             <InputNumber
               min={0.000023}
               step={0.000023}
