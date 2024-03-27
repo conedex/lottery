@@ -243,6 +243,10 @@ function App() {
     setLotteryVersion(version.toString());
   };
 
+  useEffect(() => {
+    console.log("Current Pool updated:", currentPool);
+  }, [currentPool]);
+
   const enterLottery = async () => {
     try {
       const signer = provider.getSigner();
@@ -376,6 +380,10 @@ function App() {
     return new Intl.NumberFormat().format(Math.floor(num));
   }
 
+  function formatPoolAmount(num) {
+    return parseFloat(num).toFixed(6);
+  }
+
   return (
     <div className="lottery-app">
       <div className="MultipleLotteryApp">
@@ -442,7 +450,7 @@ function App() {
                       </p>
                       <p>
                         GODL in current Lottery:{" "}
-                        <strong>{formatNumber(userEntries * 1)}</strong>
+                        <strong>{formatPoolAmount(userEntries * 1)}</strong>
                       </p>
                       <p className="modal-wallet-info">
                         Allowance given: <strong>{allowance}</strong>
@@ -491,8 +499,9 @@ function App() {
             <p>Current Lottery Version: {lotteryVersion}</p>
             <p>
               Amount in current Lottery:{" "}
-              <strong>{formatNumber(currentPool)}</strong> GODL
+              <strong>{formatPoolAmount(currentPool)}</strong> GODL
             </p>
+
             <p>Entry Amount: {numEntries * 0.000023} GODL</p>
             <p>Number of entries: {formatNumber(numEntries)}</p>
             <InputNumber
@@ -520,7 +529,7 @@ function App() {
             </p>
             <p>
               Amount Won: <br></br>
-              <strong>{formatNumber(lastPrize)}</strong> GODL
+              <strong>{formatPoolAmount(lastPrize)}</strong> GODL
             </p>
             <p>
               Last Winner #2:<br></br>
@@ -532,7 +541,7 @@ function App() {
             </p>
             <p>
               Amount Won: <br></br>
-              <strong>{formatNumber(secondPrize)}</strong> GODL
+              <strong>{formatPoolAmount(secondPrize)}</strong> GODL
             </p>
             <p>
               Last Winner #3:<br></br>
@@ -544,7 +553,7 @@ function App() {
             </p>
             <p>
               Amount Won: <br></br>
-              <strong>{formatNumber(thirdPrize)}</strong> GODL
+              <strong>{formatPoolAmount(thirdPrize)}</strong> GODL
             </p>
           </div>
           {/*<div className="lastWinner">
