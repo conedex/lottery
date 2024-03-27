@@ -40,7 +40,7 @@ function App() {
   const [transactionHash, setTransactionHash] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [lotteryVersion, setLotteryVersion] = useState(0);
-  const [numEntries, setNumEntries] = useState(10);
+  const [numEntries, setNumEntries] = useState(0.00023);
   const [userEntries, setUserEntries] = useState(0);
   const [allowance, setAllowance] = useState(0);
   const [newAllowance, setNewAllowance] = useState(1);
@@ -504,11 +504,12 @@ function App() {
               Amount in current Lottery:{" "}
               <strong>{formatNumber(currentPool)}</strong> GODL
             </p>
-            <p>Entry Amount: {formatNumber(numEntries * 1)} GODL</p>
+            <p>Entry Amount: {formatNumber(numEntries / 0.000023)} Entries</p>
             <p>Number of entries: {numEntries}</p>
             <InputNumber
-              min={1}
-              defaultValue={10}
+              min={0.000023}
+              step={0.000023}
+              defaultValue={0.00023}
               onChange={(value) => setNumEntries(value)}
               style={{ marginBottom: "10px" }}
             />
