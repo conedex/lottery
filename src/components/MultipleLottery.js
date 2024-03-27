@@ -161,14 +161,20 @@ function App() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       const now = new Date();
-      const nextSunday = new Date(now);
-      nextSunday.setUTCDate(
-        now.getUTCDay() === 0
-          ? now.getUTCDate() + 7
-          : now.getUTCDate() + (7 - now.getUTCDay())
-      );
-      nextSunday.setUTCHours(0, 5, 0, 0);
-      const difference = nextSunday - now;
+      const nextTuesday = new Date(now);
+      // Set the time to 00:05 UTC
+      nextTuesday.setUTCHours(0, 5, 0, 0);
+
+      // Calculate the day difference to next Tuesday
+      const dayDiff = (2 - now.getUTCDay() + 7) % 7; // 2 represents Tuesday (0 is Sunday, 1 is Monday, 2 is Tuesday, etc.)
+      nextTuesday.setUTCDate(now.getUTCDate() + dayDiff);
+
+      // If it's currently Tuesday but past 00:05 UTC, set nextTuesday to the following Tuesday
+      if (dayDiff === 0 && now.getUTCHours() >= 0 && now.getUTCMinutes() > 5) {
+        nextTuesday.setUTCDate(now.getUTCDate() + 7);
+      }
+
+      const difference = nextTuesday - now;
 
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
