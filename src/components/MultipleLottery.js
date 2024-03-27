@@ -40,7 +40,7 @@ function App() {
   const [transactionHash, setTransactionHash] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [lotteryVersion, setLotteryVersion] = useState(0);
-  const [numEntries, setNumEntries] = useState(0.00023);
+  const [numEntries, setNumEntries] = useState(10);
   const [userEntries, setUserEntries] = useState(0);
   const [allowance, setAllowance] = useState(0);
   const [newAllowance, setNewAllowance] = useState(1);
@@ -435,18 +435,7 @@ function App() {
                           {account}
                         </a>
                       </p>
-                      <p>
-                        GODL sent to the Treasuy through the last Lottery:{" "}
-                        <br></br>
-                        <strong>{coneTreasuryAmountHardcoded}</strong> CONE
-                      </p>
-                      <p>
-                        GODL sent to the Treasuy overall: <br></br>
-                        <strong>
-                          {coneTreasuryAmountHardcodedOverall}
-                        </strong>{" "}
-                        GODL
-                      </p>
+
                       <p className="modal-wallet-info">
                         Entries in current Lottery:{" "}
                         <strong>{userEntries}</strong>
@@ -504,12 +493,11 @@ function App() {
               Amount in current Lottery:{" "}
               <strong>{formatNumber(currentPool)}</strong> GODL
             </p>
-            <p>Entry Amount: {numEntries} GODL</p>
-            <p>Number of entries: {formatNumber(numEntries / 0.000023)}</p>
+            <p>Entry Amount: {numEntries * 0.000023} GODL</p>
+            <p>Number of entries: {formatNumber(numEntries)}</p>
             <InputNumber
-              min={0.000023}
-              step={0.000023}
-              defaultValue={0.00023}
+              min={1}
+              defaultValue={10}
               onChange={(value) => setNumEntries(value)}
               style={{ marginBottom: "10px" }}
             />
