@@ -34,5 +34,11 @@
     "amount": "28.096.000",
     "amountInNumber": 28096000,
     "wallet": "ImAlekBan"
+  },
+  {
+    "version": 7,
+    "amount": "9.776.000",
+    "amountInNumber": 9776000,
+    "wallet": "0x8e1...D81"
   }
 ]
