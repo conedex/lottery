@@ -40,5 +40,11 @@
     "amount": "9.776.000",
     "amountInNumber": 9776000,
     "wallet": "0x8e1...D81"
+  },
+  {
+    "version": 8,
+    "amount": "3.680.000",
+    "amountInNumber": 3680000,
+    "wallet": "0x545...8D8"
   }
 ]
