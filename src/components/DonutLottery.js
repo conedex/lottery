@@ -438,12 +438,12 @@ function App() {
               style={{ marginRight: "1%", marginLeft: "1%" }}
             />
           </h1>
-          {/*<Alert
+          <Alert
             type="warning"
             description="For the best experience access our Lottery with a Browser on a Desktop."
             showIcon={true}
             className="alert"
-              />*/}
+          />
           <div className="lottery-info">
             <p>Next Winner chosen in: {countdown}</p>
             <p>Current Lottery Version: {lotteryVersion}</p>
