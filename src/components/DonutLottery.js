@@ -445,7 +445,7 @@ function App() {
             className="alert"
               />*/}
           <div className="lottery-info">
-            <p>Next pull in: {countdown}</p>
+            <p>Next Winner chosen in: {countdown}</p>
             <p>Current Lottery Version: {lotteryVersion}</p>
             <p>
               Amount in current Lottery:{" "}
@@ -481,11 +481,11 @@ function App() {
               <strong>{formatNumber(lastPrize)}</strong> DONUT
             </p>
             <p>
-              Amount sent to DONUT Treasuy: <br></br>
+              DONUT burned last round: <br></br>
               <strong>{coneTreasuryAmountHardcoded}</strong> CONE
             </p>
             <p>
-              Amount sent to DONUT Treasuy overall: <br></br>
+              DONUT burned overall: <br></br>
               <strong>{coneTreasuryAmountHardcodedOverall}</strong> DONUT
             </p>
           </div>
