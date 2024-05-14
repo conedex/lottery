@@ -136,14 +136,12 @@ function App() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       const now = new Date();
-      const nextSunday = new Date(now);
-      nextSunday.setUTCDate(
-        now.getUTCDay() === 0
-          ? now.getUTCDate() + 7
-          : now.getUTCDate() + (7 - now.getUTCDay())
-      );
-      nextSunday.setUTCHours(0, 1, 0, 0);
-      const difference = nextSunday - now;
+      const nextTuesday = new Date(now);
+      const daysUntilTuesday = (2 - now.getUTCDay() + 7) % 7 || 7; // Calculate days until next Tuesday
+      nextTuesday.setUTCDate(now.getUTCDate() + daysUntilTuesday);
+      nextTuesday.setUTCHours(0, 0, 0, 0); // Set time to 00:00:00 UTC
+
+      const difference = nextTuesday - now;
 
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
