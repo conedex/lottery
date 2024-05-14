@@ -142,7 +142,7 @@ function App() {
           ? now.getUTCDate() + 7
           : now.getUTCDate() + (7 - now.getUTCDay())
       );
-      nextSunday.setUTCHours(0, 5, 0, 0);
+      nextSunday.setUTCHours(0, 1, 0, 0);
       const difference = nextSunday - now;
 
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
