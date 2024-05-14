@@ -93,6 +93,24 @@
   color: orange;
 }
 
+.donut-lottery-section {
+  background-color: whitesmoke;
+  border-radius: 15px;
+  margin: 20px 0;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+}
+
+.donut-lottery-section h2 {
+  color: darkorchid;
+  font-size: 1.8em;
+}
+
+.donut-lottery-section p {
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+
 .logo {
   width: 25%; /* adjust as needed for desktop */
   height: auto;
