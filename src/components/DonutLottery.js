@@ -17,8 +17,8 @@ const CONTRACT_ADDRESS = "0x18eE1C79E0eF0aA66F6D9D393684803b70884F99";
 const TOKEN_CONTRACT_ADDRESS = "0xf42e2b8bc2af8b110b65be98db1321b1ab8d44f5";
 const lastWinnerHardcodeAmount = "0";
 const lastWinnerHardcodeAddress = "0x89B3fdf5cd302D012f92a81341017252B7b9515a";
-const coneTreasuryAmountHardcodedOverall = "...";
-const coneTreasuryAmountHardcoded = "...";
+const coneTreasuryAmountHardcodedOverall = "26";
+const coneTreasuryAmountHardcoded = "11";
 
 function App() {
   const [provider, setProvider] = useState(null);
