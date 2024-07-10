@@ -2,23 +2,25 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Collapse, Modal, message, Alert, InputNumber } from "antd";
 import { LeftCircleOutlined } from "@ant-design/icons";
-import polygonLogo from "../images/arbitrum-arb-logo.png";
-import bitconeLogo from "../images/donuts_icon.png";
-import LOTTERY_ABI from "../abis/DonutLottery.json";
-import TOKEN_ABI from "../abis/Token.json";
-import "./DonutLottery.css";
+import polygonLogo from "../../images/polygonlogo.png";
+import bitconeLogo from "../../images/bitcone192.png";
+import LOTTERY_ABI from "../../abis/Lottery.json";
+import TOKEN_ABI from "../../abis/Token.json";
+import NFT_ABI from "../../abis/Nft.json";
+import "./Lottery.css";
 
 const { ethers } = require("ethers");
 const RPC_PROVIDER_URL =
-  "https://arb-mainnet.g.alchemy.com/v2/9sDUGVqMWGErDlSC9Q6z4-MwBstT68ig";
+  "https://polygon-mainnet.g.alchemy.com/v2/h-Z-wdXCVF8V1sqWXguZC7oUAcaG7G3k";
 const { Panel } = Collapse;
 
-const CONTRACT_ADDRESS = "0x18eE1C79E0eF0aA66F6D9D393684803b70884F99";
-const TOKEN_CONTRACT_ADDRESS = "0xf42e2b8bc2af8b110b65be98db1321b1ab8d44f5";
-const lastWinnerHardcodeAmount = "0";
+const CONTRACT_ADDRESS = "0x8e1d49a6075e673f512f7A9D38EC925d84C0dD81";
+const TOKEN_CONTRACT_ADDRESS = "0xbA777aE3a3C91fCD83EF85bfe65410592Bdd0f7c";
+const NFT_CONTRACT_ADDRESS = "0xA2B35dFA644464e031d3a4BE36FD38Ad9BA896B6";
+const lastWinnerHardcodeAmount = "16.960.000";
 const lastWinnerHardcodeAddress = "0x89B3fdf5cd302D012f92a81341017252B7b9515a";
-const coneTreasuryAmountHardcodedOverall = "26";
-const coneTreasuryAmountHardcoded = "11";
+const coneTreasuryAmountHardcodedOverall = "6.120.000";
+const coneTreasuryAmountHardcoded = "230.000";
 
 function App() {
   const [provider, setProvider] = useState(null);
@@ -37,7 +39,8 @@ function App() {
   const [numEntries, setNumEntries] = useState(10);
   const [userEntries, setUserEntries] = useState(0);
   const [allowance, setAllowance] = useState(0);
-  const [newAllowance, setNewAllowance] = useState(10);
+  const [newAllowance, setNewAllowance] = useState(10000);
+  const [nftContract, setNftContract] = useState(null);
   const [isContractPaused, setIsContractPaused] = useState(false);
 
   const showModal = () => {
@@ -77,14 +80,20 @@ function App() {
       TOKEN_ABI,
       rpcProvider
     );
+    const nftContract = new ethers.Contract(
+      NFT_CONTRACT_ADDRESS,
+      NFT_ABI,
+      rpcProvider
+    );
 
     setProvider(rpcProvider);
     setContract(contract);
     setTokenContract(tokenContract);
+    setNftContract(nftContract);
 
     if (window.ethereum) {
       window.ethereum.request({ method: "net_version" }).then((networkId) => {
-        if (networkId === "42161") {
+        if (networkId === "137") {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const contract = new ethers.Contract(
             CONTRACT_ADDRESS,
@@ -96,9 +105,15 @@ function App() {
             TOKEN_ABI,
             provider
           );
+          const nftContract = new ethers.Contract(
+            NFT_CONTRACT_ADDRESS,
+            NFT_ABI,
+            provider
+          );
           setProvider(provider);
           setContract(contract);
           setTokenContract(tokenContract);
+          setNftContract(nftContract);
           setWrongNetwork(false);
         } else {
           setWrongNetwork(true);
@@ -109,7 +124,7 @@ function App() {
         const networkId = await window.ethereum.request({
           method: "net_version",
         });
-        if (networkId === "42161") {
+        if (networkId === "137") {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const contract = new ethers.Contract(
             CONTRACT_ADDRESS,
@@ -121,13 +136,19 @@ function App() {
             TOKEN_ABI,
             provider
           );
+          const nftContract = new ethers.Contract(
+            NFT_CONTRACT_ADDRESS,
+            NFT_ABI,
+            provider
+          );
           setProvider(provider);
           setContract(contract);
           setTokenContract(tokenContract);
+          setNftContract(nftContract);
           setWrongNetwork(false);
         } else {
           setWrongNetwork(true);
-          setErrorMessage("Please switch to Arbitrum One");
+          setErrorMessage("Please switch to the Polygon Mainnet.");
         }
       });
     }
@@ -136,12 +157,14 @@ function App() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       const now = new Date();
-      const nextTuesday = new Date(now);
-      const daysUntilTuesday = (2 - now.getUTCDay() + 7) % 7 || 7; // Calculate days until next Tuesday
-      nextTuesday.setUTCDate(now.getUTCDate() + daysUntilTuesday);
-      nextTuesday.setUTCHours(0, 0, 0, 0); // Set time to 00:00:00 UTC
-
-      const difference = nextTuesday - now;
+      const nextSunday = new Date(now);
+      nextSunday.setUTCDate(
+        now.getUTCDay() === 0
+          ? now.getUTCDate() + 7
+          : now.getUTCDate() + (7 - now.getUTCDay())
+      );
+      nextSunday.setUTCHours(0, 5, 0, 0);
+      const difference = nextSunday - now;
 
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
@@ -172,7 +195,7 @@ function App() {
     const networkId = await window.ethereum.request({
       method: "net_version",
     });
-    if (networkId !== "42161") {
+    if (networkId !== "137") {
       setWrongNetwork(true);
     } else {
       setAccount(accounts[0]);
@@ -184,7 +207,7 @@ function App() {
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0xa4b1" }],
+        params: [{ chainId: "0x89" }],
       });
     } catch (error) {
       console.error(error);
@@ -199,7 +222,7 @@ function App() {
     setCurrentPool(ethers.utils.formatEther(pool));
     setLastWinner(winner);
     setLastPrize(ethers.utils.formatEther(prize));
-    setLotteryVersion(version.toString());
+    setLotteryVersion((version.toNumber() - 2).toString());
   };
 
   const enterLottery = async () => {
@@ -262,7 +285,7 @@ function App() {
           <>
             Successfully entered the Lottery.
             <a
-              href={`https://arbiscan.io/tx/${tx.hash}`}
+              href={`https://polygonscan.com/tx/${tx.hash}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{ marginLeft: "10px" }}
@@ -387,7 +410,7 @@ function App() {
                       <p className="modal-wallet-info">
                         Account Wallet:{" "}
                         <a
-                          href={`https://mumbai.arbiscan.io/address/${account}`}
+                          href={`https://polygonscan.com/address/${account}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -399,15 +422,15 @@ function App() {
                         <strong>{userEntries}</strong>
                       </p>
                       <p>
-                        DONUT in current Lottery:{" "}
-                        <strong>{formatNumber(userEntries * 10)}</strong>
+                        CONE in current Lottery:{" "}
+                        <strong>{formatNumber(userEntries * 10000)}</strong>
                       </p>
                       <p className="modal-wallet-info">
                         Allowance given: <strong>{allowance}</strong>
                       </p>
                       <InputNumber
                         min={1}
-                        defaultValue={10}
+                        defaultValue={10000}
                         onChange={(value) => setNewAllowance(value)}
                       />
                       <button onClick={increaseAllowance}>
@@ -430,7 +453,7 @@ function App() {
               className="bitcone-header"
               style={{ marginRight: "1%", marginLeft: "1%" }}
             />
-            Donut Lottery
+            BitCone Lottery
             <img
               src={bitconeLogo}
               alt="Bitcone Logo Left"
@@ -438,20 +461,20 @@ function App() {
               style={{ marginRight: "1%", marginLeft: "1%" }}
             />
           </h1>
-          <Alert
+          {/*<Alert
             type="warning"
             description="For the best experience access our Lottery with a Browser on a Desktop."
             showIcon={true}
             className="alert"
-          />
+              />*/}
           <div className="lottery-info">
-            <p>Next Winner chosen in: {countdown}</p>
+            <p>Next pull in: {countdown}</p>
             <p>Current Lottery Version: {lotteryVersion}</p>
             <p>
               Amount in current Lottery:{" "}
-              <strong>{formatNumber(currentPool)}</strong> DONUT
+              <strong>{formatNumber(currentPool)}</strong> CONE
             </p>
-            <p>Selected Entry Amount: {formatNumber(numEntries * 10)} DONUT</p>
+            <p>Entry Amount: {formatNumber(numEntries * 10000)} CONE</p>
             <p>Number of entries: {numEntries}</p>
             <InputNumber
               min={1}
@@ -478,15 +501,15 @@ function App() {
             </p>
             <p>
               Last amount won: <br></br>
-              <strong>{formatNumber(lastPrize)}</strong> DONUT
+              <strong>{formatNumber(lastPrize)}</strong> CONE
             </p>
             <p>
-              DONUT burned last round: <br></br>
+              Amount sent to CONE Treasury: <br></br>
               <strong>{coneTreasuryAmountHardcoded}</strong> CONE
             </p>
             <p>
-              DONUT burned overall: <br></br>
-              <strong>{coneTreasuryAmountHardcodedOverall}</strong> DONUT
+              Amount sent to CONE Treasury overall: <br></br>
+              <strong>{coneTreasuryAmountHardcodedOverall}</strong> CONE
             </p>
           </div>
           {/*<div className="lastWinner">
@@ -514,7 +537,7 @@ function App() {
             <Collapse defaultActiveKey={["0"]} className="faq-collapse">
               <Panel header="How does this Lottery work?" key="1">
                 <p>
-                  Users can purchase Lottery Tickets for a fixed price in DONUT
+                  Users can purchase Lottery Tickets for a fixed price in CONE
                   per Ticket. At the end of each Lottery round a winning ticket
                   is randomly selected to win the Prize Pot!
                 </p>
@@ -536,14 +559,14 @@ function App() {
               </Panel>
               <Panel header="How many tickets can I buy?" key="4">
                 <p>
-                  The current price for an entry ticket is 10 DONUT. Each user
-                  can purchase an unlimited amount of tickets.
+                  The current price for an entry ticket is 10.000 CONE. Each
+                  user can purchase an unlimited amount of tickets.
                 </p>
               </Panel>
               <Panel header="Is there any kind of fee to play?" key="5">
                 <p>
                   There is no fee to purchase Lottery Tickets, but there is a
-                  20% fee on the Prize Pool. 5% of which goes to the Donut
+                  20% fee on the Prize Pool. 5% of which goes to the Bitcone
                   Treasury Wallet, along with a 15% which goes to the Creator to
                   cover $LINK Chainlink utilization costs on every transaction,
                   as well as operational and hosting costs.

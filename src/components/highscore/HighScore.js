@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Select } from "antd";
 import { LeftCircleOutlined } from "@ant-design/icons";
-import HighScoreImage from "../images/highscorewhiteblackbg.png";
-import scoresData from "../json/scores.json";
+import HighScoreImage from "../../images/highscorewhiteblackbg.png";
+import scoresData from "../../json/scores.json";
 import "./HighScore.css";
 
 const HighScore = () => {

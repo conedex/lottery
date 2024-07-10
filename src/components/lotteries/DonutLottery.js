@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Collapse, Modal, message, InputNumber, Alert } from "antd";
+import { Collapse, Modal, message, Alert, InputNumber } from "antd";
 import { LeftCircleOutlined } from "@ant-design/icons";
-import polygonLogo from "../images/polygonlogo.png";
-import bitconeLogo from "../images/godlnobg.png";
-import LOTTERY_ABI from "../abis/MultipleLottery.json";
-import TOKEN_ABI from "../abis/godl.json";
-import NFT_ABI from "../abis/Nft.json";
-import "./MultipleLottery.css";
+import polygonLogo from "../../images/arbitrum-arb-logo.png";
+import bitconeLogo from "../../images/donuts_icon.png";
+import LOTTERY_ABI from "../../abis/DonutLottery.json";
+import TOKEN_ABI from "../../abis/Token.json";
+import "./DonutLottery.css";
 
 const { ethers } = require("ethers");
 const RPC_PROVIDER_URL =
-  "https://polygon-mainnet.g.alchemy.com/v2/h-Z-wdXCVF8V1sqWXguZC7oUAcaG7G3k";
+  "https://arb-mainnet.g.alchemy.com/v2/9sDUGVqMWGErDlSC9Q6z4-MwBstT68ig";
 const { Panel } = Collapse;
 
-const CONTRACT_ADDRESS = "0xbfff2457ed916d59Ad58104084F1fb891F6123b1";
-const TOKEN_CONTRACT_ADDRESS = "0x7aB889dcEAc8cFa825F51DD75812891DC33801d9";
-const NFT_CONTRACT_ADDRESS = "0x6Bd3a2F6b91830E964a5b3906E0DBF92a5A5Cc53";
-const lastWinnerHardcodeAmount = "16.960.000";
+const CONTRACT_ADDRESS = "0x18eE1C79E0eF0aA66F6D9D393684803b70884F99";
+const TOKEN_CONTRACT_ADDRESS = "0xf42e2b8bc2af8b110b65be98db1321b1ab8d44f5";
+const lastWinnerHardcodeAmount = "0";
 const lastWinnerHardcodeAddress = "0x89B3fdf5cd302D012f92a81341017252B7b9515a";
-const coneTreasuryAmountHardcodedOverall = "0";
-const coneTreasuryAmountHardcoded = "0";
+const coneTreasuryAmountHardcodedOverall = "26";
+const coneTreasuryAmountHardcoded = "11";
 
 function App() {
   const [provider, setProvider] = useState(null);
@@ -28,12 +26,8 @@ function App() {
   const [tokenContract, setTokenContract] = useState(null);
   const [account, setAccount] = useState(null);
   const [currentPool, setCurrentPool] = useState(0);
-  const [lastWinner1, setLastWinner1] = useState("");
-  const [lastWinner2, setLastWinner2] = useState("");
-  const [lastWinner3, setLastWinner3] = useState("");
+  const [lastWinner, setLastWinner] = useState("");
   const [lastPrize, setLastPrize] = useState(0);
-  const [secondPrize, setSecondPrize] = useState(0);
-  const [thirdPrize, setThirdPrize] = useState(0);
   const [errorMessage, setErrorMessage] = useState(null);
   const [wrongNetwork, setWrongNetwork] = useState(false);
   const [countdown, setCountdown] = useState("");
@@ -43,8 +37,7 @@ function App() {
   const [numEntries, setNumEntries] = useState(10);
   const [userEntries, setUserEntries] = useState(0);
   const [allowance, setAllowance] = useState(0);
-  const [newAllowance, setNewAllowance] = useState(1);
-  const [nftContract, setNftContract] = useState(null);
+  const [newAllowance, setNewAllowance] = useState(10);
   const [isContractPaused, setIsContractPaused] = useState(false);
 
   const showModal = () => {
@@ -84,20 +77,14 @@ function App() {
       TOKEN_ABI,
       rpcProvider
     );
-    const nftContract = new ethers.Contract(
-      NFT_CONTRACT_ADDRESS,
-      NFT_ABI,
-      rpcProvider
-    );
 
     setProvider(rpcProvider);
     setContract(contract);
     setTokenContract(tokenContract);
-    setNftContract(nftContract);
 
     if (window.ethereum) {
       window.ethereum.request({ method: "net_version" }).then((networkId) => {
-        if (networkId === "137") {
+        if (networkId === "42161") {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const contract = new ethers.Contract(
             CONTRACT_ADDRESS,
@@ -109,15 +96,9 @@ function App() {
             TOKEN_ABI,
             provider
           );
-          const nftContract = new ethers.Contract(
-            NFT_CONTRACT_ADDRESS,
-            NFT_ABI,
-            provider
-          );
           setProvider(provider);
           setContract(contract);
           setTokenContract(tokenContract);
-          setNftContract(nftContract);
           setWrongNetwork(false);
         } else {
           setWrongNetwork(true);
@@ -128,7 +109,7 @@ function App() {
         const networkId = await window.ethereum.request({
           method: "net_version",
         });
-        if (networkId === "137") {
+        if (networkId === "42161") {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const contract = new ethers.Contract(
             CONTRACT_ADDRESS,
@@ -140,19 +121,13 @@ function App() {
             TOKEN_ABI,
             provider
           );
-          const nftContract = new ethers.Contract(
-            NFT_CONTRACT_ADDRESS,
-            NFT_ABI,
-            provider
-          );
           setProvider(provider);
           setContract(contract);
           setTokenContract(tokenContract);
-          setNftContract(nftContract);
           setWrongNetwork(false);
         } else {
           setWrongNetwork(true);
-          setErrorMessage("Please switch to the Polygon Mumbai Testnet.");
+          setErrorMessage("Please switch to Arbitrum One");
         }
       });
     }
@@ -162,17 +137,9 @@ function App() {
     const intervalId = setInterval(() => {
       const now = new Date();
       const nextTuesday = new Date(now);
-      // Set the time to 00:05 UTC
-      nextTuesday.setUTCHours(0, 5, 0, 0);
-
-      // Calculate the day difference to next Tuesday
-      const dayDiff = (2 - now.getUTCDay() + 7) % 7; // 2 represents Tuesday (0 is Sunday, 1 is Monday, 2 is Tuesday, etc.)
-      nextTuesday.setUTCDate(now.getUTCDate() + dayDiff);
-
-      // If it's currently Tuesday but past 00:05 UTC, set nextTuesday to the following Tuesday
-      if (dayDiff === 0 && now.getUTCHours() >= 0 && now.getUTCMinutes() > 5) {
-        nextTuesday.setUTCDate(now.getUTCDate() + 7);
-      }
+      const daysUntilTuesday = (2 - now.getUTCDay() + 7) % 7 || 7; // Calculate days until next Tuesday
+      nextTuesday.setUTCDate(now.getUTCDate() + daysUntilTuesday);
+      nextTuesday.setUTCHours(0, 0, 0, 0); // Set time to 00:00:00 UTC
 
       const difference = nextTuesday - now;
 
@@ -205,7 +172,7 @@ function App() {
     const networkId = await window.ethereum.request({
       method: "net_version",
     });
-    if (networkId !== "137") {
+    if (networkId !== "42161") {
       setWrongNetwork(true);
     } else {
       setAccount(accounts[0]);
@@ -217,7 +184,7 @@ function App() {
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x89" }],
+        params: [{ chainId: "0xa4b1" }],
       });
     } catch (error) {
       console.error(error);
@@ -226,26 +193,14 @@ function App() {
 
   const fetchLotteryInfo = async () => {
     const pool = await contract.getCurrentPool();
-    const winner1 = await contract.getFirstWinner();
-    const winner2 = await contract.getSecondWinner();
-    const winner3 = await contract.getThirdWinner();
+    const winner = await contract.getLastWinner();
     const prize = await contract.getLastPrize();
-    const prize2 = await contract.getSecondPrize();
-    const prize3 = await contract.getThirdPrize();
     const version = await contract.currentLotteryVersion();
     setCurrentPool(ethers.utils.formatEther(pool));
-    setLastWinner1(winner1);
-    setLastWinner2(winner2);
-    setLastWinner3(winner3);
+    setLastWinner(winner);
     setLastPrize(ethers.utils.formatEther(prize));
-    setSecondPrize(ethers.utils.formatEther(prize2));
-    setThirdPrize(ethers.utils.formatEther(prize3));
     setLotteryVersion(version.toString());
   };
-
-  useEffect(() => {
-    console.log("Current Pool updated:", currentPool);
-  }, [currentPool]);
 
   const enterLottery = async () => {
     try {
@@ -255,7 +210,7 @@ function App() {
 
       // Check allowance
       const requiredAllowance = ethers.utils.parseUnits(
-        (1 * numEntries).toString(),
+        (10001 * numEntries + 1).toString(),
         18
       ); // Multiply the required allowance by the number of entries
       const allowance = await tokenContractWithSigner.allowance(
@@ -307,7 +262,7 @@ function App() {
           <>
             Successfully entered the Lottery.
             <a
-              href={`https://mumbai.polygonscan.com/tx/${tx.hash}`}
+              href={`https://arbiscan.io/tx/${tx.hash}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{ marginLeft: "10px" }}
@@ -380,13 +335,9 @@ function App() {
     return new Intl.NumberFormat().format(Math.floor(num));
   }
 
-  function formatPoolAmount(num) {
-    return parseFloat(num).toFixed(6);
-  }
-
   return (
     <div className="lottery-app">
-      <div className="MultipleLotteryApp">
+      <div className="App">
         <header className="App-header">
           <div
             style={{
@@ -436,28 +387,27 @@ function App() {
                       <p className="modal-wallet-info">
                         Account Wallet:{" "}
                         <a
-                          href={`https://mumbai.polygonscan.com/address/${account}`}
+                          href={`https://mumbai.arbiscan.io/address/${account}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
                           {account}
                         </a>
                       </p>
-
                       <p className="modal-wallet-info">
                         Entries in current Lottery:{" "}
                         <strong>{userEntries}</strong>
                       </p>
                       <p>
-                        GODL in current Lottery:{" "}
-                        <strong>{formatPoolAmount(userEntries * 1)}</strong>
+                        DONUT in current Lottery:{" "}
+                        <strong>{formatNumber(userEntries * 10)}</strong>
                       </p>
                       <p className="modal-wallet-info">
                         Allowance given: <strong>{allowance}</strong>
                       </p>
                       <InputNumber
                         min={1}
-                        defaultValue={1}
+                        defaultValue={10}
                         onChange={(value) => setNewAllowance(value)}
                       />
                       <button onClick={increaseAllowance}>
@@ -480,7 +430,7 @@ function App() {
               className="bitcone-header"
               style={{ marginRight: "1%", marginLeft: "1%" }}
             />
-            GODL Lottery
+            Donut Lottery
             <img
               src={bitconeLogo}
               alt="Bitcone Logo Left"
@@ -490,20 +440,19 @@ function App() {
           </h1>
           <Alert
             type="warning"
-            description="If the value doesn't update correctly, please reload the page"
+            description="For the best experience access our Lottery with a Browser on a Desktop."
             showIcon={true}
             className="alert"
           />
           <div className="lottery-info">
-            <p>Next pull in: {countdown}</p>
+            <p>Next Winner chosen in: {countdown}</p>
             <p>Current Lottery Version: {lotteryVersion}</p>
             <p>
               Amount in current Lottery:{" "}
-              <strong>{formatPoolAmount(currentPool)}</strong> GODL
+              <strong>{formatNumber(currentPool)}</strong> DONUT
             </p>
-
-            <p>Entry Amount: {numEntries * 0.000023} GODL</p>
-            <p>Number of entries: {formatNumber(numEntries)}</p>
+            <p>Selected Entry Amount: {formatNumber(numEntries * 10)} DONUT</p>
+            <p>Number of entries: {numEntries}</p>
             <InputNumber
               min={1}
               defaultValue={10}
@@ -520,40 +469,24 @@ function App() {
           </div>
           <div className="lastWinner">
             <p>
-              Last Winner #1:<br></br>
+              Last Winner:<br></br>
               <strong>
-                {lastWinner1.substring(0, 5) +
+                {lastWinner.substring(0, 5) +
                   "..." +
-                  lastWinner1.substring(lastWinner1.length - 5)}
+                  lastWinner.substring(lastWinner.length - 5)}
               </strong>
             </p>
             <p>
-              Amount Won: <br></br>
-              <strong>{formatPoolAmount(lastPrize)}</strong> GODL
+              Last amount won: <br></br>
+              <strong>{formatNumber(lastPrize)}</strong> DONUT
             </p>
             <p>
-              Last Winner #2:<br></br>
-              <strong>
-                {lastWinner2.substring(0, 5) +
-                  "..." +
-                  lastWinner2.substring(lastWinner2.length - 5)}
-              </strong>
+              DONUT burned last round: <br></br>
+              <strong>{coneTreasuryAmountHardcoded}</strong> CONE
             </p>
             <p>
-              Amount Won: <br></br>
-              <strong>{formatPoolAmount(secondPrize)}</strong> GODL
-            </p>
-            <p>
-              Last Winner #3:<br></br>
-              <strong>
-                {lastWinner3.substring(0, 5) +
-                  "..." +
-                  lastWinner3.substring(lastWinner3.length - 5)}
-              </strong>
-            </p>
-            <p>
-              Amount Won: <br></br>
-              <strong>{formatPoolAmount(thirdPrize)}</strong> GODL
+              DONUT burned overall: <br></br>
+              <strong>{coneTreasuryAmountHardcodedOverall}</strong> DONUT
             </p>
           </div>
           {/*<div className="lastWinner">
@@ -581,16 +514,16 @@ function App() {
             <Collapse defaultActiveKey={["0"]} className="faq-collapse">
               <Panel header="How does this Lottery work?" key="1">
                 <p>
-                  Users can purchase Lottery Tickets for a fixed price in GODL
-                  per Ticket. At the end of each Lottery round 3 winning tickets
-                  are randomly selected to win the Prize Pot!
+                  Users can purchase Lottery Tickets for a fixed price in DONUT
+                  per Ticket. At the end of each Lottery round a winning ticket
+                  is randomly selected to win the Prize Pot!
                 </p>
               </Panel>
               <Panel header="How often is a winner selected?" key="2">
                 <p>
-                  Three winners are selected at the end of each Lottery round.
-                  Each round lasts for 7 days, you may view the next Winner pull
-                  date at the top of the website!
+                  A winner is selected at the end of each Lottery round. Each
+                  round lasts for 7 days, you may view the next Winner pull date
+                  at the top of the website!
                 </p>
               </Panel>
               <Panel header="How are winners selected?" key="3">
@@ -601,23 +534,16 @@ function App() {
                   automatically.
                 </p>
               </Panel>
-              <Panel header="How much does each Winner get?" key="4">
+              <Panel header="How many tickets can I buy?" key="4">
                 <p>
-                  The Winner #1 gets 50% of the Prize Pool. The Winner #2 gets
-                  25% of the Prize Pool and the Winner #3 gets 10% of the Prize
-                  Pool.
+                  The current price for an entry ticket is 10 DONUT. Each user
+                  can purchase an unlimited amount of tickets.
                 </p>
               </Panel>
-              <Panel header="How many tickets can I buy?" key="5">
-                <p>
-                  The current price for an entry ticket is 1 GODL. Each user can
-                  purchase an unlimited amount of tickets.
-                </p>
-              </Panel>
-              <Panel header="Is there any kind of fee to play?" key="6">
+              <Panel header="Is there any kind of fee to play?" key="5">
                 <p>
                   There is no fee to purchase Lottery Tickets, but there is a
-                  20% fee on the Prize Pool. 5% of which goes to the GODL
+                  20% fee on the Prize Pool. 5% of which goes to the Donut
                   Treasury Wallet, along with a 15% which goes to the Creator to
                   cover $LINK Chainlink utilization costs on every transaction,
                   as well as operational and hosting costs.
@@ -625,7 +551,7 @@ function App() {
               </Panel>
               <Panel
                 header="What are the benefits of using this Lottery?"
-                key="7"
+                key="6"
               >
                 <p>
                   The Lottery Smart contract is immutable, this means the owner
