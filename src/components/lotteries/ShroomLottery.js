@@ -4,17 +4,17 @@ import { Collapse, Modal, message, Alert, InputNumber } from "antd";
 import { LeftCircleOutlined } from "@ant-design/icons";
 import polygonLogo from "../../images/eth-logo.png";
 import bitconeLogo from "../../images/Mushroom_Logo.png";
-import LOTTERY_ABI from "../../abis/Lottery.json";
-import TOKEN_ABI from "../../abis/Token.json";
+import LOTTERY_ABI from "../../abis/ShroomLottery.json";
+import TOKEN_ABI from "../../abis/ShroomToken.json";
 import NFT_ABI from "../../abis/Nft.json";
 import "./ShroomLottery.css";
 
 const { ethers } = require("ethers");
-const RPC_PROVIDER_URL = process.env.REACT_APP_SEPOLIA_URL;
+const RPC_PROVIDER_URL = process.env.REACT_APP_RPC_URL_MATIC;
 const { Panel } = Collapse;
 
-const CONTRACT_ADDRESS = "0x081EDaf9d173eC7BA08C7A33723A37E0B3EFBcd8";
-const TOKEN_CONTRACT_ADDRESS = "0xC64bFcE42BA6121A3CEdF8Fc721eEB626880D221";
+const CONTRACT_ADDRESS = "0x6F6C00Ee161e848495446b490723c24EB09ACDAF";
+const TOKEN_CONTRACT_ADDRESS = "0xF3ABaa9eA255d38763A5D0Ae6286d6df53154dDC";
 const NFT_CONTRACT_ADDRESS = "0x6Bd3a2F6b91830E964a5b3906E0DBF92a5A5Cc53";
 const lastWinnerHardcodeAmount = "16.960.000";
 const lastWinnerHardcodeAddress = "0x89B3fdf5cd302D012f92a81341017252B7b9515a";
@@ -92,7 +92,7 @@ function App() {
 
     if (window.ethereum) {
       window.ethereum.request({ method: "net_version" }).then((networkId) => {
-        if (networkId === "11155111") {
+        if (networkId === "137") {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const contract = new ethers.Contract(
             CONTRACT_ADDRESS,
@@ -123,7 +123,7 @@ function App() {
         const networkId = await window.ethereum.request({
           method: "net_version",
         });
-        if (networkId === "11155111") {
+        if (networkId === "137") {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const contract = new ethers.Contract(
             CONTRACT_ADDRESS,
@@ -194,7 +194,7 @@ function App() {
     const networkId = await window.ethereum.request({
       method: "net_version",
     });
-    if (networkId !== "11155111") {
+    if (networkId !== "137") {
       setWrongNetwork(true);
     } else {
       setAccount(accounts[0]);
@@ -206,7 +206,7 @@ function App() {
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0xaa36a7" }],
+        params: [{ chainId: "0x89" }],
       });
     } catch (error) {
       console.error(error);
@@ -284,7 +284,7 @@ function App() {
           <>
             Successfully entered the Lottery.
             <a
-              href={`https://sepolia.etherscan.io/tx/${tx.hash}`}
+              href={`https://polygonscan.com/tx/${tx.hash}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{ marginLeft: "10px" }}
@@ -409,7 +409,7 @@ function App() {
                       <p className="modal-wallet-info">
                         Account Wallet:{" "}
                         <a
-                          href={`https://sepolia.etherscan.io/address/${account}`}
+                          href={`https://polygonscan.com/address/${account}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -550,7 +550,7 @@ function App() {
               </Panel>
               <Panel header="How are winners selected?" key="3">
                 <p>
-                  Our Lottery Smart Contract uses Chainlink VRF to guarantee
+                  Our Lottery Smart Contract uses Chainlink VRF2.5 to guarantee
                   100% unpredictable randomness when selecting a winning ticket.
                   We also utilize Chainlink Upkeeps to keep the contract running
                   automatically.
@@ -564,11 +564,12 @@ function App() {
               </Panel>
               <Panel header="Is there any kind of fee to play?" key="5">
                 <p>
-                  There is no fee to purchase Lottery Tickets, but there is a
-                  20% fee on the Prize Pool. 5% of which goes to the SHROOM
+                  There is a 1% fee to purchase Lottery Tickets which get saved
+                  in the Lottery to cover the Tax which Shroom has in addition
+                  to a 20% fee on the Prize Pool. 5% of which goes to the SHROOM
                   Treasury Wallet, along with a 15% which goes to the Creator to
-                  cover $LINK Chainlink utilization costs on every transaction,
-                  as well as operational and hosting costs.
+                  cover Chainlink utilization costs on every transaction, as
+                  well as operational and hosting costs.
                 </p>
               </Panel>
               <Panel

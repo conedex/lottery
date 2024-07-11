@@ -9,8 +9,7 @@ import TOKEN_ABI from "../../abis/Token.json";
 import "./DonutLottery.css";
 
 const { ethers } = require("ethers");
-const RPC_PROVIDER_URL =
-  "https://arb-mainnet.g.alchemy.com/v2/9sDUGVqMWGErDlSC9Q6z4-MwBstT68ig";
+const RPC_PROVIDER_URL = process.env.REACT_APP_RPC_URL_ARB;
 const { Panel } = Collapse;
 
 const CONTRACT_ADDRESS = "0x18eE1C79E0eF0aA66F6D9D393684803b70884F99";

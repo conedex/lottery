@@ -10,8 +10,7 @@ import NFT_ABI from "../../abis/Nft.json";
 import "./MultipleLottery.css";
 
 const { ethers } = require("ethers");
-const RPC_PROVIDER_URL =
-  "https://polygon-mainnet.g.alchemy.com/v2/h-Z-wdXCVF8V1sqWXguZC7oUAcaG7G3k";
+const RPC_PROVIDER_URL = process.env.REACT_APP_RPC_URL_MATIC;
 const { Panel } = Collapse;
 
 const CONTRACT_ADDRESS = "0xbfff2457ed916d59Ad58104084F1fb891F6123b1";
@@ -307,7 +306,7 @@ function App() {
           <>
             Successfully entered the Lottery.
             <a
-              href={`https://mumbai.polygonscan.com/tx/${tx.hash}`}
+              href={`https://polygonscan.com/tx/${tx.hash}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{ marginLeft: "10px" }}
@@ -436,7 +435,7 @@ function App() {
                       <p className="modal-wallet-info">
                         Account Wallet:{" "}
                         <a
-                          href={`https://mumbai.polygonscan.com/address/${account}`}
+                          href={`https://polygonscan.com/address/${account}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >

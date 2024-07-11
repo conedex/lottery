@@ -10,8 +10,7 @@ import NFT_ABI from "../../abis/Nft.json";
 import "./Lottery.css";
 
 const { ethers } = require("ethers");
-const RPC_PROVIDER_URL =
-  "https://polygon-mainnet.g.alchemy.com/v2/h-Z-wdXCVF8V1sqWXguZC7oUAcaG7G3k";
+const RPC_PROVIDER_URL = process.env.REACT_APP_RPC_URL_MATIC;
 const { Panel } = Collapse;
 
 const CONTRACT_ADDRESS = "0x8e1d49a6075e673f512f7A9D38EC925d84C0dD81";
