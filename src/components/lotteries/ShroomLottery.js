@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Collapse, Modal, message, Alert, InputNumber } from "antd";
 import { LeftCircleOutlined } from "@ant-design/icons";
-import polygonLogo from "../../images/eth-logo.png";
+import polygonLogo from "../../images/polygonlogo.png";
 import bitconeLogo from "../../images/Mushroom_Logo.png";
 import LOTTERY_ABI from "../../abis/ShroomLottery.json";
 import TOKEN_ABI from "../../abis/ShroomToken.json";
@@ -38,7 +38,7 @@ function App() {
   const [numEntries, setNumEntries] = useState(10);
   const [userEntries, setUserEntries] = useState(0);
   const [allowance, setAllowance] = useState(0);
-  const [newAllowance, setNewAllowance] = useState(10000);
+  const [newAllowance, setNewAllowance] = useState(6874);
   const [nftContract, setNftContract] = useState(null);
   const [isContractPaused, setIsContractPaused] = useState(false);
 
@@ -232,7 +232,7 @@ function App() {
 
       // Check allowance
       const requiredAllowance = ethers.utils.parseUnits(
-        (10001 * numEntries + 1).toString(),
+        (6875 * numEntries + 1).toString(),
         18
       ); // Multiply the required allowance by the number of entries
       const allowance = await tokenContractWithSigner.allowance(
@@ -429,7 +429,7 @@ function App() {
                       </p>
                       <InputNumber
                         min={1}
-                        defaultValue={10000}
+                        defaultValue={68740}
                         onChange={(value) => setNewAllowance(value)}
                       />
                       <button onClick={increaseAllowance}>
@@ -473,7 +473,7 @@ function App() {
               Amount in current Lottery:{" "}
               <strong>{formatNumber(currentPool)}</strong> SHROOM
             </p>
-            <p>Entry Amount: {formatNumber(numEntries * 10000)} SHROOM</p>
+            <p>Entry Amount: {formatNumber(numEntries * 6874)} SHROOM</p>
             <p>Number of entries: {numEntries}</p>
             <InputNumber
               min={1}
