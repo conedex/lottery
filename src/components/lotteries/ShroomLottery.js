@@ -503,7 +503,7 @@ function App() {
               <strong>{formatNumber(lastPrize)}</strong> SHROOM
             </p>
             <p>
-              Amount sent to SHROOM Treasuy: <br></br>
+              Amount sent to SHROOM Treasury: <br></br>
               <strong>{coneTreasuryAmountHardcoded}</strong> SHROOM
             </p>
             <p>
