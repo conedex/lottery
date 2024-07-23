@@ -558,7 +558,7 @@ function App() {
               </Panel>
               <Panel header="How many tickets can I buy?" key="4">
                 <p>
-                  The current price for an entry ticket is 10.000 SHROOM. Each
+                  The current price for an entry ticket is 6,874 SHROOM. Each
                   user can purchase an unlimited amount of tickets.
                 </p>
               </Panel>
