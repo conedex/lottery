@@ -422,7 +422,7 @@ function App() {
                       </p>
                       <p>
                         SHROOM in current Lottery:{" "}
-                        <strong>{formatNumber(userEntries * 10000)}</strong>
+                        <strong>{formatNumber(userEntries * 6874)}</strong>
                       </p>
                       <p className="modal-wallet-info">
                         Allowance given: <strong>{allowance}</strong>
