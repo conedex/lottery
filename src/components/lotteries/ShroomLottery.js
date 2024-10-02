@@ -154,26 +154,35 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    const updateCountdown = () => {
       const now = new Date();
-      const nextSunday = new Date(now);
-      nextSunday.setUTCDate(
-        now.getUTCDay() === 0
-          ? now.getUTCDate() + 7
-          : now.getUTCDate() + (7 - now.getUTCDay())
-      );
-      nextSunday.setUTCHours(0, 5, 0, 0);
-      const difference = nextSunday - now;
+
+      let year = now.getUTCFullYear();
+      let month = now.getUTCMonth() + 1; // Months are 0-indexed (0 = January, 11 = December)
+
+      if (month > 11) {
+        month = 0;
+        year += 1;
+      }
+
+      // First day of the next month at 00:05 UTC
+      const nextMonthFirst = new Date(Date.UTC(year, month, 1, 0, 5, 0, 0));
+
+      const difference = nextMonthFirst - now;
 
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((difference / 1000 / 60) % 60);
+      const minutes = Math.floor((difference / (1000 * 60)) % 60);
       const seconds = Math.floor((difference / 1000) % 60);
 
-      setCountdown(`${days}:${hours}:${minutes}:${seconds}`);
-    }, 1000);
+      setCountdown(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+    };
 
-    return () => clearInterval(intervalId); // Clear interval on component unmount
+    updateCountdown();
+
+    const intervalId = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
